@@ -13,7 +13,7 @@ a stripped down version of [%pals](https://github.com/Fang-/suite/blob/11b505ef7
 
 Important files:
 
+- `/app/sailbox.hoon`
 - `/sur/sailbox.hoon`
 - `/mar/sailbox/command.hoon`
-- `/app/sailbox.hoon`
 - `/app/sailbox/webui/index.hoon`
