@@ -1,0 +1,9 @@
+:~
+  title+'sailbox'
+  info+'sail sandbox'
+  color+0x90.435d
+  version+[1 0 0]
+  website+'https://github.com/niblyx-malnus/sailbox'
+  license+'MIT'
+  site+/sailbox
+==
