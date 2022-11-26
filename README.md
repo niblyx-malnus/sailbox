@@ -1,7 +1,6 @@
 # sailbox
 
-simple sandbox to play around with sail; stripped down version of [%pals]
-(https://github.com/Fang-/suite/blob/11b505ef78a65512ed6ccc7ff77551188499d5b7/app/pals.hoon)
+simple sandbox to play around with sail; stripped down version of [%pals](https://github.com/Fang-/suite/blob/11b505ef78a65512ed6ccc7ff77551188499d5b7/app/pals.hoon)
 
 - Learn about Sail [here](https://developers.urbit.org/guides/additional/sail).
 - Learn about Sail/XML runes [here](https://developers.urbit.org/reference/hoon/rune/mic).
