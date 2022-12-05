@@ -27,4 +27,4 @@ Files to mess around with:
 7. `cp -r sailbox/* [ship-name]/sailbox` to copy the contents of this repo into your new desk.
 8. At the dojo command line `|commit %sailbox`.
 9. Install with `|install our %sailbox`.
-10. A purple tile should have appeared in Grid marked "sailbox" and a webpage is now live at `[ship-url]/sailbox`.
+10. A purple tile should have appeared in Grid marked "sailbox" and a webpage should now be live at `[ship-url]/sailbox`.
