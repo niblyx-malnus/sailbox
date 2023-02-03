@@ -6,8 +6,6 @@
 +$  state-0  [%0 data]
 +$  eyre-id  @ta
 +$  card  card:agent:gall
-+$  gift  gift:agent:gall
-+$  note  note:agent:gall
 --
 =|  state-0
 =*  state  -
