@@ -19,8 +19,6 @@ Based on a stripped-down version of %pals.
 - `desk/mar/sailbox/command.hoon` - Command mark file (13 lines)
 - `desk/app/sailbox/webui/index.hoon` - Sail HTML frontend (68 lines)
 
-Total core implementation: ~186 lines of code.
-
 # Installation
 
 1. **Clone this repo.**
@@ -75,23 +73,6 @@ For iterating on sailbox code:
    ```bash
    |commit %sailbox
    ```
-
-## Testing via Dojo
-
-Once installed, you can test the app via dojo:
-
-```bash
-# Check app state
-:sailbox +dbug
-
-# Add ships
-:sailbox &sailbox-command [%add-ship ~zod]
-:sailbox &sailbox-command [%add-ship ~nec]
-
-# Test other commands
-:sailbox &sailbox-command [%do-a-thing ~]
-:sailbox &sailbox-command [%do-another ~]
-```
 
 ## Learning Resources
 
