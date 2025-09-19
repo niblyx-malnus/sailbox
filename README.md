@@ -59,20 +59,22 @@ For iterating on sailbox code:
 1. **Setup sync configuration:**
    ```bash
    cp config.example.json config.json
-   # Edit config.json with your ship name and pier path
+   # Edit config.json with your pier path (e.g., "/path/to/pier/sailbox/")
    ```
 
-2. **Make changes to files in `desk/`**
-
-3. **Sync changes to ship:**
+2. **Start continuous sync:**
    ```bash
    ./sync.sh
    ```
+
+3. **Make changes to files in `desk/`** - they sync automatically
 
 4. **Commit in dojo:**
    ```bash
    |commit %sailbox
    ```
+
+The sync script watches for file changes and automatically syncs them to your ship.
 
 ## Learning Resources
 
