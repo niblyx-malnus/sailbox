@@ -93,12 +93,6 @@ Once installed, you can test the app via dojo:
 :sailbox &sailbox-command [%do-another ~]
 ```
 
-## Technical Details
-
-- **Kelvin**: Supports zuse 410+
-- **Dependencies**: Rudder library (included in lib/)
-- **Installation**: Uses `|new-desk` pattern with immediate `|install`
-
 ## Learning Resources
 
 - [Sail documentation](https://developers.urbit.org/guides/additional/sail)
