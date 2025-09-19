@@ -1,16 +1,38 @@
 # Sailbox
 
-Urbit Gall app for learning Sail HTML generation and web development patterns.
+Urbit Gall app for learning Sail HTML generation and developing reusable web components.
 
-## What This Is
+## Purpose
 
-A minimal Gall agent that demonstrates:
+Sailbox serves as both a **Sail learning environment** and a **component library incubator**. Its dual purpose:
+
+1. **Teaching Laboratory** - Minimal working Gall+Rudder+Sail stack for experimenting with HTML generation patterns
+2. **Component Foundry** - Building reusable, composable interface tools for Urbit web applications
+
+## Approach: Code Greenfield Methodology
+
+Following [Code Greenfield principles](https://github.com/anthropics/claude-protocol/blob/main/modes/code-greenfield.md):
+
+- **Observable Output First** - Start with visible proof, build outward with testable changes
+- **Hypothesis-Driven Development** - Make technical beliefs explicit, test in isolation
+- **Minimal Intervention** - Change as little as possible, avoid speculative helpers
+- **Natural Modularity** - Extract components only after patterns prove themselves under real use
+
+## What This Demonstrates
+
+Current working patterns:
 - Sail HTML templating using Hoon runes
 - Rudder web framework integration
 - Form handling and state management
 - Basic CRUD operations (add ships to a list)
 
-Based on a stripped-down version of %pals.
+## Component Library Foundation
+
+Ready-to-use utility libraries:
+- `desk/lib/html-utils.hoon` - jQuery-like DOM manipulation and CSS selectors
+- `desk/lib/manx-utils.hoon` - Comprehensive XML/manx tree traversal (~tinnus-napbus)
+- `desk/lib/json-utils.hoon` - Safe JSON handling and path-based access
+- `desk/lib/skeleton.hoon` - Bare agent template for rapid prototyping
 
 ## Core Files
 
