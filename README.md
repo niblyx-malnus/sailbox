@@ -1,31 +1,85 @@
-# sailbox
+# Sailbox
 
-simple sandbox to play around with sail
+Urbit Gall app for learning Sail HTML generation and web development patterns.
 
-a stripped down version of [%pals](https://github.com/Fang-/suite/blob/11b505ef78a65512ed6ccc7ff77551188499d5b7/app/pals.hoon)
+## What This Is
 
+A minimal Gall agent that demonstrates:
+- Sail HTML templating using Hoon runes
+- Rudder web framework integration
+- Form handling and state management
+- Basic CRUD operations (add ships to a list)
 
-- Learn about Sail [here](https://developers.urbit.org/guides/additional/sail).
-- Learn about Sail/XML runes [here](https://developers.urbit.org/reference/hoon/rune/mic).
-- Find the rudder library [here](https://github.com/Fang-/suite/blob/11b505ef78a65512ed6ccc7ff77551188499d5b7/lib/rudder.hoon).
-- See more examples of using the rudder library [here](https://github.com/Fang-/suite/tree/11b505ef78a65512ed6ccc7ff77551188499d5b7/lib/rudder).
-- If new to gall agents, use in conjunction with App School I [here](https://developers.urbit.org/guides/core/app-school).
-- See [other skeletons](https://github.com/niblyx-malnus/desk-skeletons).
+Based on a stripped-down version of %pals.
 
-Files to mess around with:
+## Core Files
 
-- `/app/sailbox.hoon`
-- `/sur/sailbox.hoon`
-- `/mar/sailbox/command.hoon`
-- `/app/sailbox/webui/index.hoon`
+- `desk/app/sailbox.hoon` - Main Gall agent (97 lines)
+- `desk/sur/sailbox.hoon` - Data structures (8 lines)
+- `desk/mar/sailbox/command.hoon` - Command mark file (13 lines)
+- `desk/app/sailbox/webui/index.hoon` - Sail HTML frontend (68 lines)
+
+Total core implementation: ~186 lines of code.
 
 # Installation
-1. Clone this repo.
-2. Boot up a ship (fakezod or moon or whatever you use).
-4. `|merge %sailbox our %webterm` to create a new desk called `%sailbox` forked from the `%webterm` desk.
-5. `|mount %sailbox` to access the `%sailbox` desk from the unix command line.
-6. At the unix command line `rm -rf [ship-name]/sailbox/*` to empty out the contents of the desk.
-7. `cp -r sailbox/* [ship-name]/sailbox` to copy the contents of this repo into your new desk.
-8. At the dojo command line `|commit %sailbox`.
-9. Install with `|install our %sailbox`.
-10. A purple tile should have appeared in Grid marked "sailbox" and a webpage should now be live at `[ship-url]/sailbox`.
+
+1. **Clone this repo.**
+
+2. **Boot up a ship** (fakezod or moon or whatever you use).
+
+3. **Create new desk:**
+   ```bash
+   |new-desk %sailbox
+   ```
+
+4. **Install immediately (before any commits):**
+   ```bash
+   |install our %sailbox
+   ```
+
+5. **Mount to filesystem:**
+   ```bash
+   |mount %sailbox
+   ```
+
+6. **Copy sailbox files:**
+   ```bash
+   cp -r desk/* [ship-name]/sailbox/
+   ```
+
+7. **Commit the desk:**
+   ```bash
+   |commit %sailbox
+   ```
+
+8. **Access the web interface:** Visit `[ship-url]/sailbox` in your browser.
+
+## Testing via Dojo
+
+Once installed, you can test the app via dojo:
+
+```bash
+# Check app state
+:sailbox +dbug
+
+# Add ships
+:sailbox &sailbox-command [%add-ship ~zod]
+:sailbox &sailbox-command [%add-ship ~nec]
+
+# Test other commands
+:sailbox &sailbox-command [%do-a-thing ~]
+:sailbox &sailbox-command [%do-another ~]
+```
+
+## Technical Details
+
+- **Kelvin**: Supports zuse 410+
+- **Dependencies**: Rudder library (included in lib/)
+- **Installation**: Uses `|new-desk` pattern with immediate `|install`
+
+## Learning Resources
+
+- [Sail documentation](https://developers.urbit.org/guides/additional/sail)
+- [Sail/XML runes](https://developers.urbit.org/reference/hoon/rune/mic)
+- [Rudder library source](https://github.com/Fang-/suite/blob/11b505ef78a65512ed6ccc7ff77551188499d5b7/lib/rudder.hoon)
+- [App School I](https://developers.urbit.org/guides/core/app-school)
