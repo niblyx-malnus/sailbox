@@ -54,6 +54,28 @@ Total core implementation: ~186 lines of code.
 
 8. **Access the web interface:** Visit `[ship-url]/sailbox` in your browser.
 
+## Development Workflow
+
+For iterating on sailbox code:
+
+1. **Setup sync configuration:**
+   ```bash
+   cp config.example.json config.json
+   # Edit config.json with your ship name and pier path
+   ```
+
+2. **Make changes to files in `desk/`**
+
+3. **Sync changes to ship:**
+   ```bash
+   ./sync.sh
+   ```
+
+4. **Commit in dojo:**
+   ```bash
+   |commit %sailbox
+   ```
+
 ## Testing via Dojo
 
 Once installed, you can test the app via dojo:
