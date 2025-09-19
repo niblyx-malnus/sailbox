@@ -512,7 +512,7 @@ Safe JSON handling and manipulation:
 
 ## Web Component Integration
 
-Following grubbery's pattern for custom web components:
+e.g.
 
 ```hoon
 ++  col-split
@@ -572,12 +572,6 @@ Focus areas for reusable components:
 - [Sail Guide](https://developers.urbit.org/guides/additional/sail) - Official Sail documentation
 - [Sail/XML Runes](https://developers.urbit.org/reference/hoon/rune/mic) - Complete rune reference
 - [App School I](https://developers.urbit.org/guides/core/app-school) - Gall application development
-
-### Source Code Locations
-- `~/Projects/urbit/docs.urbit.org/` - Official documentation with examples
-- `~/Projects/urbit/grubbery/desk/gub/web-components.hoon` - Web component patterns
-- `~/Projects/urbit/urbit/pkg/arvo/` - Core Urbit Sail implementations
-- `~/Projects/urbit/desks/sailbox/desk/lib/` - Utility libraries for advanced patterns
 
 ### Example Applications
 - Ahoy (ping tracker) - Real-world Sail application
