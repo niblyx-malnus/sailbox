@@ -9,9 +9,7 @@ Sailbox serves as both a **Sail learning environment** and a **component library
 1. **Teaching Laboratory** - Minimal working Gall+Rudder+Sail stack for experimenting with HTML generation patterns
 2. **Component Foundry** - Building reusable, composable interface tools for Urbit web applications
 
-## Approach: Code Greenfield Methodology
-
-Following [Code Greenfield principles](https://github.com/anthropics/claude-protocol/blob/main/modes/code-greenfield.md):
+## Approach
 
 - **Observable Output First** - Start with visible proof, build outward with testable changes
 - **Hypothesis-Driven Development** - Make technical beliefs explicit, test in isolation
