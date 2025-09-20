@@ -353,33 +353,61 @@ Tall form enables clean component composition patterns:
   ==
 ```
 
-## Real-World Application Patterns
+## Advanced Component Principles
 
-### Form Handling
-```hoon
-;form(method "post")
-  ;input(type "text", name "who", placeholder "~sampel");
-  ;button(type "submit", name "what", value "add-watch"): "+"
-==
-```
+### Composability over Complexity
 
-### Dynamic Content with State
-```hoon
-++  login-form
-  |=  [logged-in=? error=(unit tape)]
-  ^-  manx
-  ?:  logged-in
-    ;div.welcome: Welcome back!
-  ;div.login
-    ;+  ?~  error  ;span;
-        ;span.error: {u.error}
-    ;form(method "post")
-      ;input(type "text", name "username");
-      ;input(type "password", name "password");
-      ;button(type "submit"): Login
-    ==
-  ==
-```
+Build components that combine naturally rather than trying to create monolithic solutions:
+
+- **Single-purpose functions** that do one thing well
+- **Data-driven design** where components adapt to input structure
+- **Functional composition** using `|=` gates that return `manx`
+- **Nested responsibility** where complex components delegate to simpler ones
+
+### State as Data
+
+Treat UI state explicitly as data that flows through your components:
+
+- **Loading states** as boolean flags that change rendering
+- **Default values** passed as parameters rather than hardcoded
+- **Validation errors** as structured data (maps, lists) that components interpret
+- **User interactions** that return new state rather than mutating existing state
+
+### Manx as a Transformation Target
+
+Think of Sail structures as data you can manipulate programmatically:
+
+- **Post-generation modification** - build base structure, then apply changes
+- **Conditional attributes** - add/remove attributes based on state
+- **Content injection** - insert computed values into static templates
+- **Tree traversal** - find and modify specific elements in complex structures
+
+### Progressive Component Development
+
+Start simple and add complexity only when needed:
+
+- **Base case first** - make the simplest version work
+- **Add parameters gradually** - extend with optional features
+- **Extract when duplicating** - factor out common patterns only after repetition
+- **Test each addition** - verify every enhancement works in isolation
+
+### Consistent Interface Patterns
+
+Establish conventions that make components predictable:
+
+- **Parameter order** - name, required flag, default value, options
+- **Return types** - always return `manx` for renderable components
+- **Naming schemes** - verbs for actions, nouns for data, adjectives for variants
+- **Error handling** - explicit error states rather than crashes
+
+### Separation of Concerns
+
+Keep different responsibilities in different functions:
+
+- **Presentation logic** in Sail components
+- **Business logic** in pure Hoon functions
+- **State management** in data transformation functions
+- **Integration points** clearly marked and isolated
 
 ### CSS Integration
 ```hoon

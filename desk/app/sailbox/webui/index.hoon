@@ -1,5 +1,5 @@
 /-  *sailbox
-/+  rudder
+/+  rudder, sigil, lab=sail-lab
 ^-  (page:rudder data command)
 |_  [=bowl:gall * data]
 ++  argue
@@ -21,12 +21,13 @@
   |^  [%page page]
   ++  style
     '''
+    body { font-family: monospace; padding: 20px; }
     .green { color: #229922; }
     .bold { font-weight: bold; }
     '''
   ++  page
     ^-  manx
-    ;hmtl
+    ;html
       ;head
         ;title:"%sailbox"
         ;meta(charset "utf-8");
@@ -34,33 +35,29 @@
         ;style:"{(trip style)}"
       ==
       ;body
-        ;h1: Hello, Mars!
-        ;p.green.bold: Welcome to the sailbox.
-        ;p: Add some ships.
-        ;p: If you want to delete them, you will have to implement it yourself.
-        ;table
-          ;form(method "post")
-            ;tr(style "font-weight: bold")
-              ;td:""
-              ;td:"@p"
+        ;+  %+  stack:lab
+            :~  ;h1: Sailbox - Enhanced with Components
+                (alert:lab %success "Sail is rendering HTML!")
+
+                ;div
+                  ;h2: Add a ship:
+                  ;+  (input-with-button:lab "ship" "~sampel" "Add" "add-ship")
+                ==
+
+                ;div
+                  ;h2: Ships in collection ({<(lent ships)>}) - Drag to reorder (v4):
+                  ;+  (ship-list-sortable:lab ships 8)
+                ==
+
+                ;div
+                  ;h2: Testing Sail interpolation:
+                  ;p: Current time: {<now.bowl>}
+                  ;p: Our ship: {<our.bowl>}
+                ==
+
+                (card:lab "Test Card" "This is a simple card component that works!")
             ==
-            ;tr
-              ;td
-                ;button(type "submit", name "action", value "add-ship"):"+"
-              ==
-              ;td
-                ;input(type "text", name "ship", placeholder "~sampel");
-              ==
-            ==
-          ==
-        ==
-        ;table
-          ;*  %+  turn  ships
-              |=  =ship
-              ;tr
-                ;td: {(scow %p ship)}
-              ==
-        ==
+          24
       ==
     ==
   --
