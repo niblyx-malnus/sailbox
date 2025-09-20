@@ -2,6 +2,16 @@
 
 Urbit Gall app for learning Sail HTML generation and developing reusable web components.
 
+## Quick Start
+
+**Frontend**: Visit e.g. `http://localhost/sailbox` to see the live interface
+
+**Key files to modify:**
+- `desk/app/sailbox/webui/index.hoon` - Main web interface and page layout
+- `desk/lib/sail-lab.hoon` - Production component library (inline styles)
+- `desk/lib/sail-components.hoon` - CSS framework component library (first draft)
+- `desk/app/sailbox.hoon` - Gall agent (state management, form handling)
+
 ## Purpose
 
 Sailbox serves as both a **Sail learning environment** and a **component library incubator**. Its dual purpose:
