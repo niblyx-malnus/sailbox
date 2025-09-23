@@ -79,7 +79,7 @@
 :: Vertical layout component with consistent spacing
 ::
 ++  stack
-  |=  [items=(list manx) gap=@ud]
+  |=  [gap=@ud items=(list manx)]
   ^-  manx
   =/  container-style=tape
     "display: flex; flex-direction: column; gap: {<gap>}px;"
@@ -199,4 +199,32 @@
     |=  =ship
     [(scow %p ship) (ship-badge-full-width ship %unknown %.y)]
   (vlist-sortable ship-items gap)
+:: Scrollable container component
+:: Provides full-screen scrollable area that works within feather's overflow constraints
+::
+++  scrollable-container
+  |=  content=manx
+  ^-  manx
+  ;div(style "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto; padding: 20px; box-sizing: border-box;")
+    ;+  content
+  ==
+:: Scrollable container with custom padding
+::
+++  scrollable-container-padded
+  |=  [content=manx padding=tape]
+  ^-  manx
+  =/  container-style=tape
+    "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto; padding: {padding}; box-sizing: border-box;"
+  ;div(style container-style)
+    ;+  content
+  ==
+:: Scrollable container with feather classes
+::
+++  scrollable-container-feather
+  |=  content=manx
+  ^-  manx
+  ;div.fixed.scroll-y.wf.hf.p5
+    =style  "top: 0; left: 0;"
+    ;+  content
+  ==
 --

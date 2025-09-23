@@ -1694,4 +1694,95 @@
       %green   "b-3 f-3 p1 br1 s-2"
     ==
   ;div(class badge-classes): {text}
+::
+::  Pattern #24: Safe Text Node Pattern
+::  Handle atomic vs complex text content with proper escaping
+::
+++  render-safe-text-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: Atomic vs Complex Text Content Handling
+      ;+  %:  safe-text-demo
+              "Simple Text"
+              ['bold' "Bold Text"]
+              ['italics' "Italic Text"]
+              ['code' "inline-code"]
+              ['ship' ~sampel-palnet]
+          ==
+    ==
+  ==
+::
+++  safe-text-demo
+  |=  $:  simple=tape
+           bold-content=[type=@tas text=tape]
+           italic-content=[type=@tas text=tape]
+           code-content=[type=@tas text=tape]
+           ship-content=[type=@tas ship=@p]
+       ==
+  ^-  manx
+  ;div.fc.g3.p3.b1.br2
+    ;div
+      ;h5: Atomic Text (Simple):
+      ;+  (safe-inline-text simple)
+    ==
+    ;div
+      ;h5: Complex Text (Bold):
+      ;+  (safe-inline-element bold-content)
+    ==
+    ;div
+      ;h5: Complex Text (Italics):
+      ;+  (safe-inline-element italic-content)
+    ==
+    ;div
+      ;h5: Complex Text (Code):
+      ;+  (safe-inline-element code-content)
+    ==
+    ;div
+      ;h5: Complex Text (Ship):
+      ;+  (safe-ship-element ship-content)
+    ==
+  ==
+::
+++  safe-inline-text
+  |=  text=tape
+  ^-  manx
+  ::  For atomic text - simple escaping and span wrapper
+  ;span.safe-text: {text}
+::
+++  safe-inline-element
+  |=  [type=@tas content=tape]
+  ^-  manx
+  ::  For complex inline content with proper element types
+  ?+  type  ;span: {content}
+      %bold
+    ;strong.bold: {content}
+      %italics
+    ;em.italic: {content}
+      %code
+    ;code.mono.b2.p1.br1: {content}
+  ==
+::
+++  safe-ship-element
+  |=  [type=@tas ship=@p]
+  ^-  manx
+  ::  For ship content with proper formatting
+  ?+  type  ;span: {(scow %p ship)}
+      %ship
+    ;span.ship.mono.f-4: {(scow %p ship)}
+  ==
+::
+++  tlon-style-mixed-inlines
+  ^-  manx
+  ::  Demonstrates real Tlon pattern: mixed atomic + complex inlines
+  ;div.mono.s-1
+    ;span: "Message from "
+    ;strong.bold: "Important User"
+    ;span: " ("
+    ;span.ship.f-4: "~sampel-palnet"
+    ;span: "): "
+    ;code.b2.p1.br1: "status update"
+  ==
 --

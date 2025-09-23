@@ -96,200 +96,203 @@
         ==
       ==
       ;body
-        ;div(style "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto; padding: 20px; box-sizing: border-box;")
-          ;+  %+  stack:lab
+        ;+  %-  scrollable-container:lab
+            %+  stack:lab
+              20
             :~  ;h1: Sailbox - Enhanced with Components
-                (alert:lab %success "Sail is rendering HTML!")
+              (alert:lab %success "Sail is rendering HTML!")
 
-                ;div
-                  ;h2: Add a ship:
-                  ;+  (input-with-button:lab "ship" "~sampel" "Add" "add-ship")
+              ;div
+                ;h2: Add a ship:
+                ;+  (input-with-button:lab "ship" "~sampel" "Add" "add-ship")
+              ==
+
+              ;div
+                ;h2: Ships in collection ({<(lent ships)>}) - Drag to reorder (v4):
+                ;+  (ship-list-sortable:lab ships 8)
+              ==
+
+              ;div
+                ;h2: Testing Sail interpolation:
+                ;p: Current time: {<now.bowl>}
+                ;p: Our ship: {<our.bowl>}
+              ==
+
+              (card:lab "Test Card" "This is a simple card component that works!")
+
+              ;div
+                ;h2: Migrev Pattern #1 - Core Decomposition with |%
+                ;+  %-  render-simple-table:examples
+                    :-  ~["Name" "Ship" "Status"]
+                    :~  ~["Alice" "~zod" "Online"]
+                        ~["Bob" "~nec" "Offline"]
+                        ~["Charlie" "~bud" "Online"]
+                    ==
+              ==
+
+              ;div
+                ;h2: Migrev Pattern #2 - Wide Form Bodies
+                ;+  %-  render-with-wide-form:examples
+                    :-  "Shopping List"
+                    ~["Milk" "Bread" "Eggs" "Coffee"]
+              ==
+
+              ;div
+                ;h2: Migrev Pattern #3 - Empty Nodes
+                ;+  (render-conditional-content:examples %.y "✅ VISIBLE CONTENT" "Test A: Content Shown")
+                ;+  (render-conditional-content:examples %.n "❌ This should not appear" "Test B: Content Hidden (;/(\"\") empty node)")
+              ==
+
+              ;div
+                ;h2: Migrev Pattern #4 - Michep (;-) CSS & JS Injection
+                ;+  (render-with-embedded-css:examples "Click Me!" "This uses the undocumented ;- rune")
+              ==
+
+              ;div
+                ;h2: Migrev Pattern #5 - Pretty Printer Debugging
+                ;+  %:  render-debug-info:examples
+                    (malt ~[['key1' 'value1'] ['key2' 'value2'] ['ship' (crip (scow %p our.bowl))]])
+                    %.y
+                    now.bowl
                 ==
+              ==
 
-                ;div
-                  ;h2: Ships in collection ({<(lent ships)>}) - Drag to reorder (v4):
-                  ;+  (ship-list-sortable:lab ships 8)
+              ;div
+                ;h2: Migrev Pattern #6 - Direct manx Manipulation
+                ;+  %:  render-manx-manipulation:examples
+                    "Dynamic List with Highlighting"
+                    ~["First item" "Second item" "Third item (highlighted)" "Fourth item"]
+                    `2
                 ==
+              ==
 
-                ;div
-                  ;h2: Testing Sail interpolation:
-                  ;p: Current time: {<now.bowl>}
-                  ;p: Our ship: {<our.bowl>}
+              ;div
+                ;h2: Migrev Pattern #7 - Conditional Attributes
+                ;+  (render-conditional-attributes:examples "This is a normal message" %.n %.y %light)
+                ;+  (render-conditional-attributes:examples "⚠️ URGENT: This is important!" %.y %.y %accent)
+                ;+  (render-conditional-attributes:examples "Dark theme notification" %.n %.n %dark)
+              ==
+
+              ;div
+                ;h2: Advanced Pattern #8 - SVG-in-Sail Raw Embedding
+                ;+  %:  render-svg-embedding:examples
+                    "Icon Library via de-xml:html"
+                    ~[%arrow-right %check %star %heart %question]
                 ==
+              ==
 
-                (card:lab "Test Card" "This is a simple card component that works!")
-
-                ;div
-                  ;h2: Migrev Pattern #1 - Core Decomposition with |%
-                  ;+  %-  render-simple-table:examples
-                      :-  ~["Name" "Ship" "Status"]
-                      :~  ~["Alice" "~zod" "Online"]
-                          ~["Bob" "~nec" "Offline"]
-                          ~["Charlie" "~bud" "Online"]
-                      ==
+              ;div
+                ;h2: Advanced Pattern #9 - Icon Component Factory
+                ;+  %:  render-icon-factory:examples
+                    "Dynamic Icon Components with CSS Manipulation"
+                    :~  [%loader "2rem" "#3b82f6" "animate-spin"]
+                        [%settings "1.5rem" "#6b7280" "hover-transform"]
+                        [%heart "3rem" "#ef4444" "favorite-icon"]
+                        [%check "1rem" "#10b981" "success-indicator"]
+                        [%star "2.5rem" "#f59e0b" "rating-star"]
+                        [%arrow-right "1.25rem" "#8b5cf6" "nav-arrow"]
+                    ==
                 ==
+              ==
 
-                ;div
-                  ;h2: Migrev Pattern #2 - Wide Form Bodies
-                  ;+  %-  render-with-wide-form:examples
-                      :-  "Shopping List"
-                      ~["Milk" "Bread" "Eggs" "Coffee"]
+              ;div
+                ;h2: Advanced Pattern #10 - Manx Transformation Pattern
+                ;+  %:  render-manx-transformation:examples
+                    "Functional Operations on Manx Structures"
+                    :~  ["Debug Info Transform" %debug "Debug Element"]
+                        ["Interactive Transform" %interactive "Click Me!"]
+                        ["Responsive Image Transform" %image "Demo Image"]
+                        ["Base Element" %base "No Transform"]
+                    ==
                 ==
+              ==
 
-                ;div
-                  ;h2: Migrev Pattern #3 - Empty Nodes
-                  ;+  (render-conditional-content:examples %.y "✅ VISIBLE CONTENT" "Test A: Content Shown")
-                  ;+  (render-conditional-content:examples %.n "❌ This should not appear" "Test B: Content Hidden (;/(\"\") empty node)")
+              ;div
+                ;h2: Advanced Pattern #11 - Typed Door Pattern for Scoped Components
+                ;+  %:  render-typed-door-pattern:examples
+                    "Component Libraries with Shared Context"
+                    :~  [%primary %md %solid %button "Primary Button"]
+                        [%secondary %lg %outline %button "Secondary Button"]
+                        [%success %sm %ghost %badge "Success Badge"]
+                        [%danger %md %solid %card "Danger themed card content"]
+                        [%primary %lg %outline %card "Primary themed card content"]
+                        [%success %sm %solid %badge "Small Success"]
+                    ==
                 ==
+              ==
 
-                ;div
-                  ;h2: Migrev Pattern #4 - Michep (;-) CSS & JS Injection
-                  ;+  (render-with-embedded-css:examples "Click Me!" "This uses the undocumented ;- rune")
+              ;div
+                ;h2: Advanced Pattern #12 - CSS Utility Class Generation
+                ;+  %:  render-css-utility-pattern:examples
+                    "Systematic Utility Class Composition"
+                    ['row' '4' 'center' 'between']
+                    ~[1 2 3 4]
+                    ~["Item A" "Item B" "Item C" "Item D" "Item E"]
                 ==
+              ==
 
-                ;div
-                  ;h2: Migrev Pattern #5 - Pretty Printer Debugging
-                  ;+  %:  render-debug-info:examples
-                      (malt ~[['key1' 'value1'] ['key2' 'value2'] ['ship' (crip (scow %p our.bowl))]])
-                      %.y
-                      now.bowl
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #13 - Complex List Rendering
+                ::  Force recompile for updated examples
+                ;+  (render-complex-list-patterns:examples "Hierarchical Data and Conditional Tables")
+              ==
 
-                ;div
-                  ;h2: Migrev Pattern #6 - Direct manx Manipulation
-                  ;+  %:  render-manx-manipulation:examples
-                      "Dynamic List with Highlighting"
-                      ~["First item" "Second item" "Third item (highlighted)" "Fourth item"]
-                      `2
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #14 - Form Generation Pattern
+                ::  Force recompile for updated examples again
+                ;+  (render-form-generation-pattern:examples "Complex Forms with Validation Display")
+              ==
 
-                ;div
-                  ;h2: Migrev Pattern #7 - Conditional Attributes
-                  ;+  (render-conditional-attributes:examples "This is a normal message" %.n %.y %light)
-                  ;+  (render-conditional-attributes:examples "⚠️ URGENT: This is important!" %.y %.y %accent)
-                  ;+  (render-conditional-attributes:examples "Dark theme notification" %.n %.n %dark)
-                ==
+              ;div
+                ;h2: Advanced Pattern #15 - Embedded Udon Pattern
+                ;+  (render-embedded-udon-pattern:examples "Seamless Udon Integration with Sail")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #8 - SVG-in-Sail Raw Embedding
-                  ;+  %:  render-svg-embedding:examples
-                      "Icon Library via de-xml:html"
-                      ~[%arrow-right %check %star %heart %question]
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #16 - Data-Driven Grid System Pattern
+                ;+  (render-data-driven-grid-pattern:examples "Algorithmic Grid Layout Systems")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #9 - Icon Component Factory
-                  ;+  %:  render-icon-factory:examples
-                      "Dynamic Icon Components with CSS Manipulation"
-                      :~  [%loader "2rem" "#3b82f6" "animate-spin"]
-                          [%settings "1.5rem" "#6b7280" "hover-transform"]
-                          [%heart "3rem" "#ef4444" "favorite-icon"]
-                          [%check "1rem" "#10b981" "success-indicator"]
-                          [%star "2.5rem" "#f59e0b" "rating-star"]
-                          [%arrow-right "1.25rem" "#8b5cf6" "nav-arrow"]
-                      ==
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #17 - CSS-in-Tape Embedding Pattern
+                ;+  (render-css-in-tape-pattern:examples "Inline CSS with Feather-Style Syntax")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #10 - Manx Transformation Pattern
-                  ;+  %:  render-manx-transformation:examples
-                      "Functional Operations on Manx Structures"
-                      :~  ["Debug Info Transform" %debug "Debug Element"]
-                          ["Interactive Transform" %interactive "Click Me!"]
-                          ["Responsive Image Transform" %image "Demo Image"]
-                          ["Base Element" %base "No Transform"]
-                      ==
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #18 - Conditional Marl Construction with Unit Types
+                ;+  (render-conditional-marl-pattern:examples "Optional Content with Unit Types")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #11 - Typed Door Pattern for Scoped Components
-                  ;+  %:  render-typed-door-pattern:examples
-                      "Component Libraries with Shared Context"
-                      :~  [%primary %md %solid %button "Primary Button"]
-                          [%secondary %lg %outline %button "Secondary Button"]
-                          [%success %sm %ghost %badge "Success Badge"]
-                          [%danger %md %solid %card "Danger themed card content"]
-                          [%primary %lg %outline %card "Primary themed card content"]
-                          [%success %sm %solid %badge "Small Success"]
-                      ==
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #19 - Dynamic Status Indicator Pattern
+                ;+  (render-dynamic-status-pattern:examples "Real-time Status Displays with Computed Values")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #12 - CSS Utility Class Generation
-                  ;+  %:  render-css-utility-pattern:examples
-                      "Systematic Utility Class Composition"
-                      ['row' '4' 'center' 'between']
-                      ~[1 2 3 4]
-                      ~["Item A" "Item B" "Item C" "Item D" "Item E"]
-                  ==
-                ==
+              ;div
+                ;h2: Advanced Pattern #20 - SVG Sigil Generation Pattern
+                ;+  (render-svg-sigil-pattern:examples "Generate Unique SVG Avatars from Ship Names")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #13 - Complex List Rendering
-                  ::  Force recompile for updated examples
-                  ;+  (render-complex-list-patterns:examples "Hierarchical Data and Conditional Tables")
-                ==
+              ;div
+                ;h2: Advanced Pattern #21 - Meta Tag Generation Pattern
+                ;+  (render-meta-tag-pattern:examples "Generate Comprehensive Social Media and SEO Meta Tags")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #14 - Form Generation Pattern
-                  ::  Force recompile for updated examples again
-                  ;+  (render-form-generation-pattern:examples "Complex Forms with Validation Display")
-                ==
+              ;div
+                ;h2: Advanced Pattern #22 - Inline CSS Generation Pattern
+                ;+  (render-inline-css-pattern:examples "Generate Inline CSS from Hoon Data Structures")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #15 - Embedded Udon Pattern
-                  ;+  (render-embedded-udon-pattern:examples "Seamless Udon Integration with Sail")
-                ==
+              ;div
+                ;h2: Advanced Pattern #23 - Calendar Date Grid Generation
+                ;+  (render-calendar-pattern:examples "Generate Complex Calendar Grids with Date-Specific Styling")
+              ==
 
-                ;div
-                  ;h2: Advanced Pattern #16 - Data-Driven Grid System Pattern
-                  ;+  (render-data-driven-grid-pattern:examples "Algorithmic Grid Layout Systems")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #17 - CSS-in-Tape Embedding Pattern
-                  ;+  (render-css-in-tape-pattern:examples "Inline CSS with Feather-Style Syntax")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #18 - Conditional Marl Construction with Unit Types
-                  ;+  (render-conditional-marl-pattern:examples "Optional Content with Unit Types")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #19 - Dynamic Status Indicator Pattern
-                  ;+  (render-dynamic-status-pattern:examples "Real-time Status Displays with Computed Values")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #20 - SVG Sigil Generation Pattern
-                  ;+  (render-svg-sigil-pattern:examples "Generate Unique SVG Avatars from Ship Names")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #21 - Meta Tag Generation Pattern
-                  ;+  (render-meta-tag-pattern:examples "Generate Comprehensive Social Media and SEO Meta Tags")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #22 - Inline CSS Generation Pattern
-                  ;+  (render-inline-css-pattern:examples "Generate Inline CSS from Hoon Data Structures")
-                ==
-
-                ;div
-                  ;h2: Advanced Pattern #23 - Calendar Date Grid Generation
-                  ;+  (render-calendar-pattern:examples "Generate Complex Calendar Grids with Date-Specific Styling")
-                ==
-
+              ;div
+                ;h2: Tlon Pattern #24 - Safe Text Node Pattern
+                ;+  (render-safe-text-pattern:examples "Handle Atomic vs Complex Text Content with Proper Escaping")
+              ==
             ==
-          35
-        ==
       ==
     ==
   --
