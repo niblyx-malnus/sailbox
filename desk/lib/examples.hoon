@@ -421,4 +421,360 @@
       %+  fall  (de-xml:html (crip svg-string))  ;div: ICON-ERROR
     --
   --
+::  Manx Transformation Pattern - programmatic manx transformation with functional operations
+::
+++  render-manx-transformation
+  |=  [title=tape demos=(list [label=tape demo-type=@t content=tape])]
+  ^-  manx
+  =/  info-style=tape
+    "background: #fef7ff; padding: 10px; border-left: 4px solid #8b5cf6; margin: 10px 0;"
+  =/  demo-container-style=tape
+    "display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; background: #f9fafb; border-radius: 8px; margin: 10px 0;"
+  |^  ;div
+        ;p(style info-style)
+          ; Manx Transformation Pattern enables programmatic modification of manx structures.
+          ; Apply functional operations like adding debug info, making elements interactive, or styling images.
+        ==
+        ;h3: {title}
+        ;div(style demo-container-style)
+          ;*  %+  turn  demos
+              |=  [label=tape demo-type=@t content=tape]
+              (demo-transform label demo-type content)
+        ==
+        ;div(style "margin-top: 15px; font-size: 0.9em; color: #666;")
+          ; Transformations applied: {<(lent demos)>} functional operations on manx structures
+        ==
+      ==
+  ::
+  ++  demo-transform
+    |=  [label=tape demo-type=@t content=tape]
+    ^-  manx
+    =/  card-style=tape
+      "background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;"
+    =/  header-style=tape
+      "font-weight: bold; color: #374151; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f3f4f6;"
+    =/  demo-area-style=tape
+      "margin: 15px 0; min-height: 60px; display: flex; align-items: center; justify-content: center;"
+    =/  base-element=manx
+      ?-  demo-type
+        %debug     ;div: {content}
+        %interactive  ;button: {content}
+        %image     ;img(src "https://via.placeholder.com/200x120/4338ca/ffffff?text=Demo", alt content);
+        *          ;span: {content}
+      ==
+    =/  transformed-element=manx
+      ?-  demo-type
+        %debug        (add-debug-info base-element)
+        %interactive  (make-interactive base-element "alert('Button clicked!')")
+        %image        (responsive-image base-element)
+        *             base-element
+      ==
+    ;div(style card-style)
+      ;div(style header-style): {label}
+      ;div(style demo-area-style)
+        ;+  transformed-element
+      ==
+      ;div(style "font-size: 0.8em; color: #6b7280; margin-top: 10px;")
+        ; Transformation: {(trip demo-type)} applied to base element
+      ==
+    ==
+  ::
+  ++  add-debug-info
+    |=  element=manx
+    ^-  manx
+    =/  with-debug-class=manx  (pac:~(at mx:html-utils element) "debug-enabled border-2 border-yellow-400")
+    (pus:~(at mx:html-utils with-debug-class) "background: #fef3c7; position: relative; padding: 10px;")
+  ::
+  ++  make-interactive
+    |=  [element=manx action=tape]
+    ^-  manx
+    =/  with-class=manx  (pac:~(at mx:html-utils element) "interactive cursor-pointer")
+    =/  with-style=manx  (pus:~(at mx:html-utils with-class) "padding: 10px 20px; border: 2px solid #3b82f6; border-radius: 6px; background: #eff6ff;")
+    (put:~(at mx:html-utils with-style) %onclick action)
+  ::
+  ++  responsive-image
+    |=  element=manx
+    ^-  manx
+    =/  with-classes=manx  (pac:~(at mx:html-utils element) "responsive max-w-full h-auto rounded-lg shadow-md")
+    =/  with-style=manx  (pus:~(at mx:html-utils with-classes) "object-fit: cover; transition: transform 0.3s ease;")
+    (put:~(at mx:html-utils with-style) %onmouseover "this.style.transform='scale(1.05)'")
+  --
+::  Typed Door Pattern for Scoped Components - component libraries with shared context
+::
+++  render-typed-door-pattern
+  |=  [title=tape demos=(list [theme=@t size=@t variant=@t demo-type=@t content=tape])]
+  ^-  manx
+  =/  info-style=tape
+    "background: #f0fdf4; padding: 10px; border-left: 4px solid #16a34a; margin: 10px 0;"
+  =/  demo-container-style=tape
+    "display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; padding: 20px; background: #f8fafc; border-radius: 8px; margin: 10px 0;"
+  |^  ;div
+        ;p(style info-style)
+          ; Typed Door Pattern creates component libraries with shared context.
+          ; The door |_ holds theme/size/variant state that all components can access.
+        ==
+        ;h3: {title}
+        ;div(style demo-container-style)
+          ;*  %+  turn  demos
+              |=  [theme=@t size=@t variant=@t demo-type=@t content=tape]
+              (demo-showcase theme size variant demo-type content)
+        ==
+        ;div(style "margin-top: 15px; font-size: 0.9em; color: #666;")
+          ; Component instances: {<(lent demos)>} components sharing contextual styling
+        ==
+      ==
+  ::
+  ++  demo-showcase
+    |=  [theme=@t size=@t variant=@t demo-type=@t content=tape]
+    ^-  manx
+    =/  card-style=tape
+      "background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;"
+    =/  header-style=tape
+      "font-weight: bold; color: #374151; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f3f4f6;"
+    =/  demo-area-style=tape
+      "margin: 15px 0; min-height: 80px; display: flex; align-items: center; justify-content: center;"
+    =/  context-info=tape
+      "Theme: {(trip theme)}, Size: {(trip size)}, Variant: {(trip variant)}"
+    =/  component-door  ~(. ui-components [theme size variant])
+    =/  content-element=manx  ;p: {content}
+    =/  rendered-component=manx
+      ?-  demo-type
+        %button     (button:component-door content "alert('Button clicked!')")
+        %card       (card:component-door "Sample Card" content-element)
+        %badge      (badge:component-door content)
+        *           ;span: {content}
+      ==
+    ;div(style card-style)
+      ;div(style header-style): {(trip demo-type)} Component
+      ;div(style demo-area-style)
+        ;+  rendered-component
+      ==
+      ;div(style "font-size: 0.8em; color: #6b7280; margin-top: 10px;")
+        ; {context-info}
+      ==
+    ==
+  ::
+  ++  ui-components
+    |_  [theme=@t size=@t variant=@t]
+    ++  button
+      |=  [text=tape action=tape]
+      ^-  manx
+      =/  theme-classes=tape
+        ?-  theme
+          %primary    "bg-blue-500 text-white hover:bg-blue-600"
+          %secondary  "bg-gray-500 text-white hover:bg-gray-600"
+          %success    "bg-green-500 text-white hover:bg-green-600"
+          %danger     "bg-red-500 text-white hover:bg-red-600"
+          *           "bg-gray-300 text-gray-800"
+        ==
+      =/  size-classes=tape
+        ?-  size
+          %sm   "px-2 py-1 text-sm"
+          %md   "px-4 py-2 text-base"
+          %lg   "px-6 py-3 text-lg"
+          *     "px-3 py-1.5 text-sm"
+        ==
+      =/  variant-classes=tape
+        ?-  variant
+          %solid     ""
+          %outline   "border-2 bg-transparent"
+          %ghost     "bg-transparent"
+          *          ""
+        ==
+      =/  all-classes=tape
+        "btn {theme-classes} {size-classes} {variant-classes} rounded transition-colors cursor-pointer"
+      ;button
+        =class  all-classes
+        =onclick  action
+        : {text}
+      ==
+    ::
+    ++  card
+      |=  [title=tape content=manx]
+      ^-  manx
+      =/  theme-classes=tape
+        ?-  theme
+          %primary    "border-blue-200 bg-blue-50"
+          %secondary  "border-gray-200 bg-gray-50 hover:bg-gray-100"
+          %success    "border-green-200 bg-green-50"
+          %danger     "border-red-200 bg-red-50"
+          *           "border-gray-200 bg-white"
+        ==
+      =/  size-classes=tape
+        ?-  size
+          %sm   "p-3"
+          %md   "p-4"
+          %lg   "p-6"
+          *     "p-4"
+        ==
+      =/  variant-classes=tape
+        ?-  variant
+          %solid     "shadow-md"
+          %outline   "border-2"
+          %ghost     "border border-dashed"
+          *          "border shadow-sm"
+        ==
+      =/  all-classes=tape
+        "card {theme-classes} {size-classes} {variant-classes} rounded-lg"
+      ;div
+        =class  all-classes
+        ;div.card-header
+          =class  "border-b pb-2 mb-3"
+          ;h3
+            =class  "text-lg font-semibold m-0"
+            : {title}
+          ==
+        ==
+        ;div.card-body
+          ;+  content
+        ==
+      ==
+    ::
+    ++  badge
+      |=  text=tape
+      ^-  manx
+      =/  theme-classes=tape
+        ?-  theme
+          %primary    "bg-blue-100 text-blue-800"
+          %secondary  "bg-gray-100 text-gray-800"
+          %success    "bg-green-100 text-green-800"
+          %danger     "bg-red-100 text-red-800"
+          *           "bg-gray-100 text-gray-600"
+        ==
+      =/  size-classes=tape
+        ?-  size
+          %sm   "px-1.5 py-0.5 text-xs"
+          %md   "px-2.5 py-0.5 text-sm"
+          %lg   "px-3 py-1 text-base"
+          *     "px-2 py-0.5 text-xs"
+        ==
+      =/  variant-classes=tape
+        ?-  variant
+          %solid     ""
+          %outline   "border bg-transparent"
+          %ghost     "bg-transparent"
+          *          ""
+        ==
+      =/  all-classes=tape
+        "badge {theme-classes} {size-classes} {variant-classes} rounded-full font-medium inline-block"
+      ;span
+        =class  all-classes
+        : {text}
+      ==
+    --
+  --
+::  CSS Utility Class Generation - systematic utility class composition
+::
+++  render-css-utility-pattern
+  |=  [title=tape layout-params=[direction=@t gap=@t align=@t justify=@t] grid-cols=(list @ud) demo-items=(list tape)]
+  ^-  manx
+  |^  ;div.css-utility-demo
+        ;h3: {title}
+        ;+  explanation
+        ;+  flex-demo
+        ;+  spacing-demo
+        ;+  grid-demo
+      ==
+  ::
+  ++  explanation
+    ;p
+      =style  "background: #e1f5fe; padding: 10px; border-left: 4px solid #0277bd; margin: 10px 0;"
+      : CSS Utility Class Generation pattern creates systematic utility classes programmatically.
+      : Generate flex layouts, spacing, grids, and responsive classes with consistent naming.
+    ==
+  ::
+  ++  flex-demo
+    =/  flex-classes=tape  (flex-layout direction.layout-params gap.layout-params align.layout-params justify.layout-params)
+    ;div.demo-section
+      =style  "margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;"
+      ;h4: Flex Layout Generation
+      ;p: Generated classes: "{flex-classes}"
+      ;div
+        =class  "{flex-classes} b1 p2 br1"
+        =style  "min-height: 60px;"
+        ;*  %+  turn  demo-items
+            |=  item=tape
+            ;div.b-4.f0.p-1.br1.tc
+              : {item}
+            ==
+      ==
+    ==
+  ::
+  ++  spacing-demo
+    =/  space-classes-1=tape  (spacing-classes 4 2)
+    =/  space-classes-2=tape  (spacing-classes 6 4)
+    ;div.demo-section
+      =style  "margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;"
+      ;h4: Spacing Class Generation
+      ;div
+        =style  "display: flex; gap: 20px; flex-wrap: wrap;"
+        ;div
+          =class  space-classes-1
+          =style  "background: #fef3c7; border: 2px dashed #f59e0b;"
+          ;span: p-4 m-2: "{space-classes-1}"
+        ==
+        ;div
+          =class  space-classes-2
+          =style  "background: #dcfce7; border: 2px dashed #16a34a;"
+          ;span: p-6 m-4: "{space-classes-2}"
+        ==
+      ==
+    ==
+  ::
+  ++  grid-demo
+    =/  grid-classes=tape  (responsive-grid grid-cols)
+    ;div.demo-section
+      =style  "margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;"
+      ;h4: Responsive Grid Generation
+      ;p: Generated classes: "{grid-classes}"
+      ;div
+        =class  "{grid-classes} b1 p4 br2"
+        ;*  %+  turn  demo-items
+            |=  item=tape
+            ;div.b-3.f0.p3.br2.tc.s-1
+              : {item}
+            ==
+      ==
+    ==
+  ::
+  ++  flex-layout
+    |=  [direction=@t gap=@t align=@t justify=@t]
+    ^-  tape
+    %-  zing
+    :~  ?-  direction
+          %row     "fr"
+          %column  "fc"
+          *        "fr"
+        ==
+        " "
+        "g{(trip gap)}"
+        " "
+        ?-  align
+          %center   "ac"
+          %start    "as"
+          %end      "ae"
+          %stretch  "af"
+          *         "ac"
+        ==
+        " "
+        ?-  justify
+          %center   "jc"
+          %between  "jb"
+          %start    "js"
+          %end      "je"
+          *         "jc"
+        ==
+    ==
+  ::
+  ++  spacing-classes
+    |=  [p=@ud m=@ud]
+    ^-  tape
+    "p{((d-co:co 1) p)} mt{((d-co:co 1) m)}"
+  ::
+  ++  responsive-grid
+    |=  cols=(list @ud)
+    ^-  tape
+    =/  base-col=@ud  ?~(cols 1 i.cols)
+    "fc basis-full g2"
+  --
 --

@@ -1,5 +1,5 @@
 /-  *sailbox
-/+  rudder, sigil, lab=sail-lab, examples
+/+  rudder, sigil, lab=sail-lab, examples, feather
 ^-  (page:rudder data command)
 |_  [=bowl:gall * data]
 ++  argue
@@ -21,7 +21,16 @@
   |^  [%page page]
   ++  style
     '''
-    body { font-family: monospace; padding: 20px; }
+    /* Force scrolling override */
+    html, body {
+      overflow: auto !important;
+      height: auto !important;
+      min-height: 100vh !important;
+    }
+    body {
+      font-family: monospace;
+      padding: 20px;
+    }
     .green { color: #229922; }
     .bold { font-weight: bold; }
     .table-container table { border-collapse: collapse; width: 100%; margin: 10px 0; }
@@ -35,10 +44,12 @@
         ;title:"%sailbox"
         ;meta(charset "utf-8");
         ;meta(name "viewport", content "width=device-width, initial-scale=1");
+        ;+  feather:feather
         ;style:"{(trip style)}"
       ==
       ;body
-        ;+  %+  stack:lab
+        ;div(style "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto; padding: 20px; box-sizing: border-box;")
+          ;+  %+  stack:lab
             :~  ;h1: Sailbox - Enhanced with Components
                 (alert:lab %success "Sail is rendering HTML!")
 
@@ -134,8 +145,45 @@
                       ==
                   ==
                 ==
+
+                ;div
+                  ;h2: Advanced Pattern #10 - Manx Transformation Pattern
+                  ;+  %:  render-manx-transformation:examples
+                      "Functional Operations on Manx Structures"
+                      :~  ["Debug Info Transform" %debug "Debug Element"]
+                          ["Interactive Transform" %interactive "Click Me!"]
+                          ["Responsive Image Transform" %image "Demo Image"]
+                          ["Base Element" %base "No Transform"]
+                      ==
+                  ==
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #11 - Typed Door Pattern for Scoped Components
+                  ;+  %:  render-typed-door-pattern:examples
+                      "Component Libraries with Shared Context"
+                      :~  [%primary %md %solid %button "Primary Button"]
+                          [%secondary %lg %outline %button "Secondary Button"]
+                          [%success %sm %ghost %badge "Success Badge"]
+                          [%danger %md %solid %card "Danger themed card content"]
+                          [%primary %lg %outline %card "Primary themed card content"]
+                          [%success %sm %solid %badge "Small Success"]
+                      ==
+                  ==
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #12 - CSS Utility Class Generation
+                  ;+  %:  render-css-utility-pattern:examples
+                      "Systematic Utility Class Composition"
+                      ['row' '4' 'center' 'between']
+                      ~[1 2 3 4]
+                      ~["Item A" "Item B" "Item C" "Item D" "Item E"]
+                  ==
+                ==
             ==
           24
+        ==
       ==
     ==
   --
