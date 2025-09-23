@@ -1,0 +1,142 @@
+/-  *sailbox
+/+  rudder, sigil, lab=sail-lab, examples
+^-  (page:rudder data command)
+|_  [=bowl:gall * data]
+++  argue
+  |=  [headers=header-list:http body=(unit octs)]
+  ^-  $@(brief:rudder command)
+  =/  args=(map @t @t)  ?~(body ~ (frisk:rudder q.u.body))
+  ?~  action=(~(get by args) 'action')  ~
+  ?>  =(u.action %add-ship)
+  ?~  ship=(slaw %p (~(gut by args) 'ship' ''))  ~
+  [%add-ship u.ship]
+::
+++  final  (alert:rudder (cat 3 '/' dap.bowl) build)
+::
+++  build
+  |=  $:  arg=(list [k=@t v=@t])
+          msg=(unit [o=? =@t])
+      ==
+  ^-  reply:rudder
+  |^  [%page page]
+  ++  style
+    '''
+    body { font-family: monospace; padding: 20px; }
+    .green { color: #229922; }
+    .bold { font-weight: bold; }
+    .table-container table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+    .table-container th, .table-container td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .table-container th { background-color: #f2f2f2; font-weight: bold; }
+    '''
+  ++  page
+    ^-  manx
+    ;html
+      ;head
+        ;title:"%sailbox"
+        ;meta(charset "utf-8");
+        ;meta(name "viewport", content "width=device-width, initial-scale=1");
+        ;style:"{(trip style)}"
+      ==
+      ;body
+        ;+  %+  stack:lab
+            :~  ;h1: Sailbox - Enhanced with Components
+                (alert:lab %success "Sail is rendering HTML!")
+
+                ;div
+                  ;h2: Add a ship:
+                  ;+  (input-with-button:lab "ship" "~sampel" "Add" "add-ship")
+                ==
+
+                ;div
+                  ;h2: Ships in collection ({<(lent ships)>}) - Drag to reorder (v4):
+                  ;+  (ship-list-sortable:lab ships 8)
+                ==
+
+                ;div
+                  ;h2: Testing Sail interpolation:
+                  ;p: Current time: {<now.bowl>}
+                  ;p: Our ship: {<our.bowl>}
+                ==
+
+                (card:lab "Test Card" "This is a simple card component that works!")
+
+                ;div
+                  ;h2: Migrev Pattern #1 - Core Decomposition with |%
+                  ;+  %-  render-simple-table:examples
+                      :-  ~["Name" "Ship" "Status"]
+                      :~  ~["Alice" "~zod" "Online"]
+                          ~["Bob" "~nec" "Offline"]
+                          ~["Charlie" "~bud" "Online"]
+                      ==
+                ==
+
+                ;div
+                  ;h2: Migrev Pattern #2 - Wide Form Bodies
+                  ;+  %-  render-with-wide-form:examples
+                      :-  "Shopping List"
+                      ~["Milk" "Bread" "Eggs" "Coffee"]
+                ==
+
+                ;div
+                  ;h2: Migrev Pattern #3 - Empty Nodes
+                  ;+  (render-conditional-content:examples %.y "✅ VISIBLE CONTENT" "Test A: Content Shown")
+                  ;+  (render-conditional-content:examples %.n "❌ This should not appear" "Test B: Content Hidden (;/(\"\") empty node)")
+                ==
+
+                ;div
+                  ;h2: Migrev Pattern #4 - Michep (;-) CSS & JS Injection
+                  ;+  (render-with-embedded-css:examples "Click Me!" "This uses the undocumented ;- rune")
+                ==
+
+                ;div
+                  ;h2: Migrev Pattern #5 - Pretty Printer Debugging
+                  ;+  %:  render-debug-info:examples
+                      (malt ~[['key1' 'value1'] ['key2' 'value2'] ['ship' (crip (scow %p our.bowl))]])
+                      %.y
+                      now.bowl
+                  ==
+                ==
+
+                ;div
+                  ;h2: Migrev Pattern #6 - Direct manx Manipulation
+                  ;+  %:  render-manx-manipulation:examples
+                      "Dynamic List with Highlighting"
+                      ~["First item" "Second item" "Third item (highlighted)" "Fourth item"]
+                      `2
+                  ==
+                ==
+
+                ;div
+                  ;h2: Migrev Pattern #7 - Conditional Attributes
+                  ;+  (render-conditional-attributes:examples "This is a normal message" %.n %.y %light)
+                  ;+  (render-conditional-attributes:examples "⚠️ URGENT: This is important!" %.y %.y %accent)
+                  ;+  (render-conditional-attributes:examples "Dark theme notification" %.n %.n %dark)
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #8 - SVG-in-Sail Raw Embedding
+                  ;+  %:  render-svg-embedding:examples
+                      "Icon Library via de-xml:html"
+                      ~[%arrow-right %check %star %heart %unknown]
+                  ==
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #9 - Icon Component Factory
+                  ;+  %:  render-icon-factory:examples
+                      "Dynamic Icon Components with CSS Manipulation"
+                      :~  [%loader "2rem" "#3b82f6" "animate-spin"]
+                          [%settings "1.5rem" "#6b7280" "hover-transform"]
+                          [%heart "3rem" "#ef4444" "favorite-icon"]
+                          [%check "1rem" "#10b981" "success-indicator"]
+                          [%star "2.5rem" "#f59e0b" "rating-star"]
+                          [%arrow-right "1.25rem" "#8b5cf6" "nav-arrow"]
+                      ==
+                  ==
+                ==
+            ==
+          24
+      ==
+    ==
+  --
+--
