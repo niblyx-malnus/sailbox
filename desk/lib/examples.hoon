@@ -1,6 +1,6 @@
 ::  examples.hoon - Advanced Sail patterns
 ::
-/+  html-utils
+/+  html-utils, feather
 |%
 ::  Core Decomposition Pattern - decompose complex rendering with |% arms
 ::
@@ -1362,4 +1362,336 @@
               ;div(style "margin: 0.25rem 0; padding: 0.25rem; background: white; border-radius: 2px;"): {item}
         ==
   ==
+::
+::  Pattern #19: Dynamic Status Indicator Pattern
+::  Generate real-time status displays with computed values
+::
+++  render-dynamic-status-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: Sales Status (Authenticated)
+      ;+  (simple-status 7 10 %.y)
+      ;h4: Sales Status (Unauthenticated)
+      ;+  (simple-status 45 100 %.n)
+    ==
+  ==
+::
+++  simple-status
+  |=  [sold=@ud total=@ud authenticated=?]
+  ^-  manx
+  =/  available=@ud  (sub total sold)
+  =/  percentage=@ud  ?:(=(total 0) 0 (div (mul sold 100) total))
+  ;div(style "border: 1px solid #ccc; padding: 1rem; margin: 0.5rem 0; border-radius: 4px;")
+    ;p: Sold: {(scow %ud sold)} / {(scow %ud total)} ({(scow %ud percentage)}%)
+    ;p: Available: {(scow %ud available)}
+    ;+  ?:  authenticated
+          ;button: Buy Now
+        ;p: Login to purchase
+  ==
+::
+::  Pattern #20: SVG Sigil Generation Pattern
+::  Generate unique SVG avatars directly from Urbit ship names
+::
+++  render-svg-sigil-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: Ship Sigils
+      ;div(style "display: flex; gap: 1rem; flex-wrap: wrap;")
+        ;+  (simple-sigil ~zod)
+        ;+  (simple-sigil ~nec)
+        ;+  (simple-sigil ~bud)
+        ;+  (simple-sigil ~wes)
+      ==
+      ;h4: Generated Patterns
+      ;div(style "display: flex; gap: 1rem; flex-wrap: wrap;")
+        ;+  (pattern-sigil ~sampel-palnet)
+        ;+  (pattern-sigil ~dovryp-toblug)
+      ==
+    ==
+  ==
+::
+++  simple-sigil
+  |=  =ship
+  ^-  manx
+  =/  ship-num=@ud  (mod (mug ship) 16)
+  =/  size=tape  "64"
+  =/  color1=tape  (get-ship-color ship-num)
+  =/  color2=tape  (get-ship-secondary ship-num)
+  ;div(style "text-align: center; margin: 0.5rem;")
+    ;+  (svg-sigil ship-num size color1 color2)
+    ;p(style "margin-top: 0.5rem; font-size: 0.75rem;"): {(scow %p ship)}
+  ==
+::
+++  pattern-sigil
+  |=  =ship
+  ^-  manx
+  =/  ship-num=@ud  (mod (mug ship) 64)
+  =/  size=tape  "80"
+  =/  color1=tape  (get-ship-color ship-num)
+  =/  color2=tape  (get-ship-secondary ship-num)
+  ;div(style "text-align: center; margin: 0.5rem;")
+    ;+  (complex-svg-sigil ship-num size color1 color2)
+    ;p(style "margin-top: 0.5rem; font-size: 0.75rem;"): {(scow %p ship)}
+  ==
+::
+++  svg-sigil
+  |=  [ship-num=@ud size=tape color1=tape color2=tape]
+  ^-  manx
+  ;svg
+    =width  size
+    =height  size
+    =viewBox  "0 0 128 128"
+    =xmlns  "http://www.w3.org/2000/svg"
+    ;rect(fill color1, width "128", height "128");
+    ;+  (get-ship-shape ship-num color2)
+  ==
+::
+++  complex-svg-sigil
+  |=  [ship-num=@ud size=tape color1=tape color2=tape]
+  ^-  manx
+  ;svg
+    =width  size
+    =height  size
+    =viewBox  "0 0 128 128"
+    =xmlns  "http://www.w3.org/2000/svg"
+    ;rect(fill color1, width "128", height "128");
+    ;+  (get-complex-shape ship-num color2)
+  ==
+::
+++  get-ship-color
+  |=  ship-num=@ud
+  ^-  tape
+  =/  colors=(list tape)
+    ~["#3b82f6" "#ef4444" "#10b981" "#f59e0b" "#8b5cf6" "#ec4899" "#06b6d4" "#84cc16"]
+  (snag (mod ship-num (lent colors)) colors)
+::
+++  get-ship-secondary
+  |=  ship-num=@ud
+  ^-  tape
+  =/  colors=(list tape)
+    ~["#ffffff" "#f1f5f9" "#fef3c7" "#ecfdf5" "#fdf2f8" "#f0f9ff" "#f7fee7" "#faf5ff"]
+  (snag (mod ship-num (lent colors)) colors)
+::
+++  get-ship-shape
+  |=  [ship-num=@ud color=tape]
+  ^-  manx
+  ?+  (mod ship-num 4)
+    ;circle(cx "64", cy "64", r "32", fill color);
+  %1
+    ;rect(x "32", y "32", width "64", height "64", fill color);
+  %2
+    ;polygon(points "64,20 100,80 28,80", fill color);
+  %3
+    ;ellipse(cx "64", cy "64", rx "40", ry "20", fill color);
+  ==
+::
+++  get-complex-shape
+  |=  [ship-num=@ud color=tape]
+  ^-  manx
+  ?+  (mod ship-num 6)
+    ;g
+      ;circle(cx "32", cy "32", r "16", fill color);
+      ;circle(cx "96", cy "96", r "16", fill color);
+    ==
+  %1
+    ;g
+      ;rect(x "16", y "16", width "32", height "32", fill color);
+      ;rect(x "80", y "80", width "32", height "32", fill color);
+      ;rect(x "48", y "48", width "32", height "32", fill color);
+    ==
+  %2
+    ;g
+      ;polygon(points "64,8 80,40 48,40", fill color);
+      ;polygon(points "64,120 80,88 48,88", fill color);
+    ==
+  %3
+    ;g
+      ;circle(cx "64", cy "32", r "12", fill color);
+      ;rect(x "52", y "52", width "24", height "24", fill color);
+      ;circle(cx "64", cy "96", r "12", fill color);
+    ==
+  %4
+    ;g
+      ;ellipse(cx "32", cy "64", rx "20", ry "40", fill color);
+      ;ellipse(cx "96", cy "64", rx "20", ry "40", fill color);
+    ==
+  %5
+    ;g
+      ;polygon(points "64,16 88,52 40,52", fill color);
+      ;polygon(points "64,112 88,76 40,76", fill color);
+      ;circle(cx "64", cy "64", r "8", fill color);
+    ==
+  ==
+::
+::  Pattern #21: Meta Tag Generation Pattern
+::  Generate comprehensive social media and SEO meta tags
+::
+++  render-meta-tag-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: SEO & Social Media Meta Tags
+      ;div(style "background: #f3f4f6; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.875rem;")
+        ;*  %:  render-meta-tags
+                "Understanding Urbit: A Personal Server Platform"
+                "Learn about Urbit, a clean-slate OS and network for the 21st century. Discover how to run your own personal server that you actually own."
+                ~sampel-palnet
+                "https://urbit.org/images/urbit-social.jpg"
+                "https://urbit.org/blog/understanding-urbit"
+            ==
+      ==
+      ;h4: Minimal Meta Tags
+      ;div(style "background: #f3f4f6; border-radius: 8px; padding: 1rem; margin-top: 1rem; font-family: monospace; font-size: 0.875rem;")
+        ;*  %:  render-meta-tags
+                "Quick Guide"
+                "A brief introduction"
+                ~zod
+                ""
+                "/guide"
+            ==
+      ==
+    ==
+  ==
+::
+++  render-meta-tags
+  |=  $:  title=tape
+          description=tape
+          author=@p
+          image=tape
+          url=tape
+      ==
+  ^-  marl
+  :~  ;meta(charset "utf-8");
+      ;meta(name "viewport", content "width=device-width, initial-scale=1");
+      ;meta(name "description", content description);
+      ;meta(property "og:title", content title);
+      ;meta(property "og:description", content description);
+      ;meta(property "og:image", content image);
+      ;meta(property "og:url", content url);
+      ;meta(property "og:type", content "article");
+      ;meta(property "og:site_name", content "Urbit");
+      ;meta(property "og:article:author:username", content (scow %p author));
+      ;meta(name "twitter:card", content "summary_large_image");
+      ;meta(name "twitter:title", content title);
+      ;meta(name "twitter:description", content description);
+      ;meta(name "twitter:image", content image);
+  ==
+::
+::  Pattern #22: Inline CSS Generation Pattern
+::  Generate inline CSS from Hoon data structures
+::
+++  render-inline-css-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: Dynamic Inline Styles
+      ;+  %:  styled-element
+              %div
+              %-  ~(gas by *(map tape tape))
+              ~[["background-color" "#3b82f6"] ["color" "white"] ["padding" "1rem"] ["border-radius" "0.5rem"]]
+              ;div: Blue Box with White Text
+          ==
+      ;+  %:  styled-element
+              %button
+              %-  ~(gas by *(map tape tape))
+              ~[["background" "linear-gradient(90deg, #8b5cf6, #ec4899)"] ["color" "white"] ["padding" "0.75rem 1.5rem"] ["border" "none"] ["border-radius" "9999px"] ["cursor" "pointer"]]
+              ;button: Gradient Button
+          ==
+      ;h4: Generated Style Properties
+      ;div
+        ;*  %+  turn  ~[["margin" "2rem"] ["padding" "1rem"] ["font-size" "1.2rem"]]
+            |=  [prop=tape val=tape]
+            ;div(style "padding: 0.25rem; background: #f9fafb; margin: 0.125rem; font-family: monospace;"): {prop}: {val};
+      ==
+    ==
+  ==
+::
+++  inline-styles
+  |=  s=(map tape tape)
+  ^-  tape
+  %-  zing
+  %+  join  " "
+  %+  turn  ~(tap by s)
+  |=  [k=tape v=tape]
+  :(weld k ": " v ";")
+::
+++  styled-element
+  |=  [tag=@t styles=(map tape tape) content=manx]
+  ^-  manx
+  ?~  styles
+    content
+  %=    content
+      a.g
+    %+  snoc  a.g.content
+    ['style' (inline-styles styles)]
+  ==
+::
+::  Pattern #23: Calendar Date Grid Generation (Bottom-up approach)
+::  Start with the smallest working piece
+::
+++  render-calendar-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: November 2024 Calendar Grid
+      ;div.b1.bd1.br2.p3
+        ;+  calendar-header
+        ;+  (calendar-week (gulf 1 7))
+        ;+  (calendar-week (gulf 8 14))
+      ==
+    ==
+  ==
+::
+::
+++  calendar-header
+  ^-  manx
+  ;div.fr.b2.bd1
+    ;*  %+  turn  ~["SUN" "MON" "TUE" "WED" "THU" "FRI" "SAT"]
+        |=  day=tape
+        ;div.grow.tc.bold.f2.s-1: {day}
+  ==
+::
+++  calendar-week
+  |=  days=(list @ud)
+  ^-  manx
+  ;div.fr
+    ;*  %+  turn  days
+        |=  day=@ud
+        (calendar-cell day)
+  ==
+::
+++  calendar-cell
+  |=  day=@ud
+  ^-  manx
+  ;div.bd1.p3.fc
+    =style  "min-height: 80px; width: 14.28%; flex: 0 0 14.28%;"
+    ;div.bold.f1: {(scow %ud day)}
+    ;+  ?+  day  ;/("")
+          %3  (event-badge "Meet" %blue)
+          %9  (event-badge "Party" %yellow)
+        ==
+  ==
+::
+++  event-badge
+  |=  [text=tape color=@tas]
+  ^-  manx
+  =/  badge-classes=tape
+    ?+  color  "p1 br1 s-2"
+      %blue    "b-4 f-4 p1 br1 s-2"
+      %yellow  "b-2 f-2 p1 br1 s-2"
+      %green   "b-3 f-3 p1 br1 s-2"
+    ==
+  ;div(class badge-classes): {text}
 --

@@ -262,8 +262,33 @@
                   ;+  (render-conditional-marl-pattern:examples "Optional Content with Unit Types")
                 ==
 
+                ;div
+                  ;h2: Advanced Pattern #19 - Dynamic Status Indicator Pattern
+                  ;+  (render-dynamic-status-pattern:examples "Real-time Status Displays with Computed Values")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #20 - SVG Sigil Generation Pattern
+                  ;+  (render-svg-sigil-pattern:examples "Generate Unique SVG Avatars from Ship Names")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #21 - Meta Tag Generation Pattern
+                  ;+  (render-meta-tag-pattern:examples "Generate Comprehensive Social Media and SEO Meta Tags")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #22 - Inline CSS Generation Pattern
+                  ;+  (render-inline-css-pattern:examples "Generate Inline CSS from Hoon Data Structures")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #23 - Calendar Date Grid Generation
+                  ;+  (render-calendar-pattern:examples "Generate Complex Calendar Grids with Date-Specific Styling")
+                ==
+
             ==
-          33
+          35
         ==
       ==
     ==
