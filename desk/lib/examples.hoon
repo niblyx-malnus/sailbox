@@ -1035,4 +1035,117 @@
       ==
     ==
   --
+::  Embedded Udon Pattern - seamlessly embed Udon (Urbit markdown) within Sail structures
+::
+++  render-embedded-udon-pattern
+  |=  [title=tape]
+  ^-  manx
+  |^  ;div.embedded-udon-demo
+        ;h3: {title}
+        ;+  render-explanation
+        ;+  render-slide-show
+        ;+  render-blog-post
+      ==
+  ++  render-explanation
+    ^-  manx
+    ;div.explanation(style "background: #f0f9ff; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #0ea5e9;")
+      ;p: Embedded Udon Pattern lets you write Udon (Urbit markdown) directly within Sail structures
+      ;ul
+        ;li: Mix structured Sail components with natural markdown content
+        ;li: Automatic parsing of Udon syntax into manx elements
+        ;li: Slide show generation from markdown sections
+        ;li: Blog post formatting with embedded content
+      ==
+    ==
+  ++  render-slide-show
+    ^-  manx
+    ;div.slide-show-demo
+      ;h4: Slide Show Demo (Udon → Sail)
+      ;div.slide-container(style "border: 2px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 15px 0; background: #fafafa; min-height: 300px;")
+        ;+
+        =;  a=manx
+          ;div.slides-container(style "display: flex; flex-direction: column; gap: 20px;")
+            ;*
+            ::  group elements, separated by %hr
+            =|  slides=marl
+            =|  slide=marl
+            |-  ^-  marl
+            =/  news  [;div.slide(style "background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 4px solid #3b82f6;"):(*slide) slides]
+            ?~  c.a  (flop `marl`news)
+            ?:  =(%hr n.g.i.c.a)
+              $(c.a t.c.a, slide ~, slides news)
+            $(c.a t.c.a, slide (snoc slide i.c.a))
+          ==
+        ::
+        ::  write your slides below.
+        ::
+        ;>
+        # Welcome to Urbit Sail Patterns
+
+        This is our *first slide* demonstrating embedded Udon.
+
+        - Easy markdown syntax
+        - Automatic parsing
+        - Seamless integration
+
+        ---
+
+        # Advanced Patterns
+
+        We can embed _italic text_, *bold text*, and even `inline code`.
+
+        This makes documentation much easier!
+
+        ---
+
+        # Final Slide
+
+        > This is a blockquote showing how Udon seamlessly integrates with Sail patterns.
+
+        Perfect for creating rich content experiences.
+      ==
+    ==
+  ++  render-blog-post
+    ^-  manx
+    =/  blog-content=manx
+      ;>
+      # Urbit Development Best Practices
+
+      Writing effective Hoon code requires understanding several key principles:
+
+      ## Core Concepts
+
+      + *Immutability*: All data structures are immutable by default
+      + *Type Safety*: The type system prevents many runtime errors
+      + *Functional Programming*: Embrace pure functions and recursion
+
+      ## Code Example
+
+      Here's a simple example of a recursive function:
+
+      ```
+      ++  factorial
+        |=  n=@ud
+        ^-  @ud
+        ?:  =(n 0)  1
+        (mul n $(n (dec n)))
+      ```
+
+      ## Best Practices
+
+      - Use descriptive variable names
+      - Keep functions small and focused
+      - Write comprehensive tests
+      - Document your APIs
+
+      > Remember: Good code is written for humans to read, not just for computers to execute.
+    ;div.blog-post-demo
+      ;h4: Blog Post Demo (Rich Udon Content)
+      ;div.blog-container(style "border: 2px solid #d1d5db; border-radius: 8px; padding: 25px; margin: 15px 0; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);")
+        ;div.prose
+          ;+  blog-content
+        ==
+      ==
+    ==
+  --
 --

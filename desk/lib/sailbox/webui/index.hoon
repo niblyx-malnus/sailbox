@@ -1,6 +1,7 @@
 /-  *sailbox
 /+  rudder, sigil, lab=sail-lab, examples, feather
 ^-  (page:rudder data command)
+::
 |_  [=bowl:gall * data]
 ++  argue
   |=  [headers=header-list:http body=(unit octs)]
@@ -226,8 +227,13 @@
                   ::  Force recompile for updated examples again
                   ;+  (render-form-generation-pattern:examples "Complex Forms with Validation Display")
                 ==
+
+                ;div
+                  ;h2: Advanced Pattern #15 - Embedded Udon Pattern
+                  ;+  (render-embedded-udon-pattern:examples "Seamless Udon Integration with Sail")
+                ==
             ==
-          27
+          32
         ==
       ==
     ==
