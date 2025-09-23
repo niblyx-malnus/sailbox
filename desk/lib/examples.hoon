@@ -1148,4 +1148,218 @@
       ==
     ==
   --
+::  Data-Driven Grid System Pattern - algorithmically generate complex grid layouts
+::
+++  render-data-driven-grid-pattern
+  |=  [title=tape]
+  ^-  manx
+  |^  ;div.grid-system-demo
+        ;h3: {title}
+        ;+  render-explanation
+        ;+  render-simple-grid
+        ;+  render-interactive-grid
+        ;+  render-responsive-grid
+      ==
+  ++  render-explanation
+    ^-  manx
+    ;div.explanation(style "background: #f5f3ff; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #8b5cf6;")
+      ;p: Data-Driven Grid System Pattern generates complex grid layouts algorithmically
+      ;ul
+        ;li: Pixel-perfect positioning with coordinate-based placement
+        ;li: Dynamic tile generation from data structures
+        ;li: Responsive grid containers with calculated dimensions
+        ;li: Interactive elements with hover effects and links
+      ==
+    ==
+  ++  render-simple-grid
+    ^-  manx
+    =/  tiles=(map [x=@ud y=@ud] [color=@t content=tape])
+      %-  malt
+      :~  [[0 0] ['#3b82f6' "A"]]
+          [[1 0] ['#ef4444' "B"]]
+          [[0 1] ['#10b981' "C"]]
+          [[1 1] ['#f59e0b' "D"]]
+      ==
+    ;div.grid-demo
+      ;h4: Simple 2x2 Grid
+      ;+  (grid-system tiles [2 2])
+    ==
+  ++  render-interactive-grid
+    ^-  manx
+    =/  tiles=(map [x=@ud y=@ud] [color=@t content=tape])
+      %-  malt
+      :~  [[0 0] ['#6366f1' "🏠"]]
+          [[2 0] ['#ec4899' "🌟"]]
+          [[1 1] ['#14b8a6' "⚡"]]
+          [[3 1] ['#f97316' "🚀"]]
+          [[0 2] ['#8b5cf6' "💎"]]
+          [[2 2] ['#06b6d4' "🎯"]]
+      ==
+    ;div.grid-demo
+      ;h4: Interactive Tile Grid
+      ;+  (interactive-grid-system tiles [4 3])
+    ==
+  ++  render-responsive-grid
+    ^-  manx
+    =/  tiles=(map [x=@ud y=@ud] [color=@t content=tape])
+      %-  malt
+      :~  [[0 0] ['#1f2937' "Header"]]
+          [[1 0] ['#1f2937' "Nav"]]
+          [[0 1] ['#374151' "Content"]]
+          [[1 1] ['#4b5563' "Sidebar"]]
+          [[0 2] ['#6b7280' "Footer"]]
+          [[1 2] ['#6b7280' "Extra"]]
+      ==
+    ;div.grid-demo
+      ;h4: Layout Grid System
+      ;+  (layout-grid-system tiles [2 3])
+    ==
+  ::
+  ++  grid-system
+    |=  [tiles=(map [x=@ud y=@ud] [color=@t content=tape]) dimensions=[w=@ud h=@ud]]
+    ^-  manx
+    ;div.grid-container
+      =style  "position: relative; width: {<(mul w.dimensions 80)>}px; height: {<(mul h.dimensions 80)>}px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; margin: 15px 0;"
+      ;*  %+  turn  ~(tap by tiles)
+          |=  [[x=@ud y=@ud] [color=@t content=tape]]
+          (tile [x y] color content)
+    ==
+  ::
+  ++  interactive-grid-system
+    |=  [tiles=(map [x=@ud y=@ud] [color=@t content=tape]) dimensions=[w=@ud h=@ud]]
+    ^-  manx
+    ;div.interactive-grid-container
+      =style  "position: relative; width: {<(mul w.dimensions 70)>}px; height: {<(mul h.dimensions 70)>}px; background: #1e293b; border: 2px solid #334155; border-radius: 12px; margin: 15px 0; overflow: hidden;"
+      ;*  %+  turn  ~(tap by tiles)
+          |=  [[x=@ud y=@ud] [color=@t content=tape]]
+          (interactive-tile [x y] color content)
+    ==
+  ::
+  ++  layout-grid-system
+    |=  [tiles=(map [x=@ud y=@ud] [color=@t content=tape]) dimensions=[w=@ud h=@ud]]
+    ^-  manx
+    ;div.layout-grid-container
+      =style  "position: relative; width: {<(mul w.dimensions 120)>}px; height: {<(mul h.dimensions 60)>}px; background: #0f172a; border: 2px solid #1e293b; border-radius: 8px; margin: 15px 0;"
+      ;*  %+  turn  ~(tap by tiles)
+          |=  [[x=@ud y=@ud] [color=@t content=tape]]
+          (layout-tile [x y] color content)
+    ==
+  ::
+  ++  tile
+    |=  [[x=@ud y=@ud] color=@t content=tape]
+    ^-  manx
+    =/  left=@ud  (mul x 80)
+    =/  top=@ud   (mul y 80)
+    ;div.tile
+      =style  "position: absolute; top: {<top>}px; left: {<left>}px; width: 70px; height: 70px; background: {(trip color)}; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+      : {content}
+    ==
+  ::
+  ++  interactive-tile
+    |=  [[x=@ud y=@ud] color=@t content=tape]
+    ^-  manx
+    =/  left=@ud  (mul x 70)
+    =/  top=@ud   (mul y 70)
+    ;div.interactive-tile
+      =style  "position: absolute; top: {<top>}px; left: {<left>}px; width: 60px; height: 60px; background: {(trip color)}; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); cursor: pointer; transition: all 0.3s ease; user-select: none;"
+      =onmouseover  "this.style.transform='scale(1.1) rotate(5deg)'; this.style.zIndex='10';"
+      =onmouseout   "this.style.transform='scale(1) rotate(0deg)'; this.style.zIndex='1';"
+      =onclick      "this.style.animation='pulse 0.3s ease';"
+      : {content}
+    ==
+  ::
+  ++  layout-tile
+    |=  [[x=@ud y=@ud] color=@t content=tape]
+    ^-  manx
+    =/  left=@ud  (mul x 120)
+    =/  top=@ud   (mul y 60)
+    ;div.layout-tile
+      =style  "position: absolute; top: {<top>}px; left: {<left>}px; width: 110px; height: 50px; background: {(trip color)}; color: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 12px; border-radius: 4px; border: 1px solid #475569;"
+      : {content}
+    ==
+  --
+::
+::  Pattern #17: CSS-in-Tape Embedding Pattern
+::  Generate inline CSS from tape literals and embed directly in manx
+::
+++  render-css-in-tape-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;style
+        ; .profile-widget {
+        ;   border: 1px solid #d1d5db;
+        ;   padding: 1.5em;
+        ;   margin: 1em 0;
+        ;   border-radius: 8px;
+        ;   background: #f9fafb;
+        ; }
+        ; .profile-headline {
+        ;   display: flex;
+        ;   align-items: center;
+        ;   gap: 1em;
+        ;   margin-bottom: 1em;
+        ; }
+      ==
+      ;div.profile-widget
+        ;div.profile-headline
+          ;div.avatar(style "width: 48px; height: 48px; background: linear-gradient(45deg, #3b82f6, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;"): ~Z
+          ;div.info
+            ;h3: ~zod
+            ;p: Ship Captain & System Administrator
+          ==
+        ==
+        ;div.content
+          ;p: This demonstrates CSS-in-Tape pattern with embedded styles using feather-style syntax.
+          ;p.winner: This text uses the animated styles from the head! 🏆
+        ==
+      ==
+    ==
+  ==
+::
+::  Pattern #18: Conditional Marl Construction with Unit Types (Simple Version)
+::  Use unit types to conditionally construct content
+::
+++  render-conditional-marl-pattern
+  |=  title=tape
+  ^-  manx
+  ;div
+    ;h3: {title}
+    ;div
+      ;h4: Profile with Optional Bio
+      ;+  (simple-profile `'I love distributed systems!' "~zod")
+      ;h4: Profile without Bio
+      ;+  (simple-profile ~ "~bus")
+      ;h4: Optional List Demo
+      ;+  (optional-list `~["alpha" "beta" "gamma"])
+      ;h4: Empty List Demo
+      ;+  (optional-list ~)
+    ==
+  ==
+::
+++  simple-profile
+  |=  [bio=(unit @t) name=tape]
+  ^-  manx
+  ;div.profile(style "border: 1px solid #ccc; padding: 1rem; margin: 0.5rem 0;")
+    ;h5: {name}
+    ;+  ?~  bio
+          ;p: No bio available
+        ;p: Bio: {(trip u.bio)}
+  ==
+::
+++  optional-list
+  |=  items=(unit (list tape))
+  ^-  manx
+  ;div.list-demo(style "background: #f5f5f5; padding: 1rem; border-radius: 4px;")
+    ;+  ?~  items
+          ;p: No items to display
+        ;div
+          ;p: Items:
+          ;*  %+  turn  u.items
+              |=  item=tape
+              ;div(style "margin: 0.25rem 0; padding: 0.25rem; background: white; border-radius: 2px;"): {item}
+        ==
+  ==
 --

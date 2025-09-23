@@ -1,7 +1,6 @@
 /-  *sailbox
 /+  rudder, sigil, lab=sail-lab, examples, feather
 ^-  (page:rudder data command)
-::
 |_  [=bowl:gall * data]
 ++  argue
   |=  [headers=header-list:http body=(unit octs)]
@@ -78,6 +77,21 @@
           ;         }
           ;         .nav-arrow:hover {
           ;           transform: translateX(4px);
+          ;         }
+          ;         /* Pattern #17 Animation Styles */
+          ;         @keyframes shake {
+          ;           0%  { transform: translate(0, 0) }
+          ;           10% { transform: translate(-8px, 3px) }
+          ;           30% { transform: translate(3px, -8px) }
+          ;           50% { transform: translate(-3px, -3px) }
+          ;           80% { transform: translate(5px, 8px) }
+          ;         }
+          ;         .winner {
+          ;           animation: shake 0.5s infinite;
+          ;           border: 2px solid gold;
+          ;           padding: 2px 6px;
+          ;           border-radius: 4px;
+          ;           display: inline-block;
           ;         }
         ==
       ==
@@ -232,8 +246,24 @@
                   ;h2: Advanced Pattern #15 - Embedded Udon Pattern
                   ;+  (render-embedded-udon-pattern:examples "Seamless Udon Integration with Sail")
                 ==
+
+                ;div
+                  ;h2: Advanced Pattern #16 - Data-Driven Grid System Pattern
+                  ;+  (render-data-driven-grid-pattern:examples "Algorithmic Grid Layout Systems")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #17 - CSS-in-Tape Embedding Pattern
+                  ;+  (render-css-in-tape-pattern:examples "Inline CSS with Feather-Style Syntax")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #18 - Conditional Marl Construction with Unit Types
+                  ;+  (render-conditional-marl-pattern:examples "Optional Content with Unit Types")
+                ==
+
             ==
-          32
+          33
         ==
       ==
     ==
