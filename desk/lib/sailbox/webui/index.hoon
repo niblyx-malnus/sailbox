@@ -46,6 +46,39 @@
         ;meta(name "viewport", content "width=device-width, initial-scale=1");
         ;+  feather:feather
         ;style:"{(trip style)}"
+        ;style
+          ;         /* Icon Component Factory Styles */
+          ;         .hover-transform:hover {
+          ;           transform: scale(1.1) rotate(5deg);
+          ;           transition: transform 0.2s ease;
+          ;         }
+          ;         .favorite-icon {
+          ;           transition: all 0.3s ease;
+          ;           filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3));
+          ;         }
+          ;         .favorite-icon:hover {
+          ;           transform: scale(1.2);
+          ;           filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.5));
+          ;         }
+          ;         .success-indicator {
+          ;           background: rgba(16, 185, 129, 0.1);
+          ;           border-radius: 50%;
+          ;           padding: 2px;
+          ;         }
+          ;         .rating-star {
+          ;           transition: transform 0.2s ease;
+          ;           cursor: pointer;
+          ;         }
+          ;         .rating-star:hover {
+          ;           transform: scale(1.1) rotate(10deg);
+          ;         }
+          ;         .nav-arrow {
+          ;           transition: transform 0.2s ease;
+          ;         }
+          ;         .nav-arrow:hover {
+          ;           transform: translateX(4px);
+          ;         }
+        ==
       ==
       ;body
         ;div(style "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto; padding: 20px; box-sizing: border-box;")
@@ -128,7 +161,7 @@
                   ;h2: Advanced Pattern #8 - SVG-in-Sail Raw Embedding
                   ;+  %:  render-svg-embedding:examples
                       "Icon Library via de-xml:html"
-                      ~[%arrow-right %check %star %heart %unknown]
+                      ~[%arrow-right %check %star %heart %question]
                   ==
                 ==
 
@@ -181,8 +214,20 @@
                       ~["Item A" "Item B" "Item C" "Item D" "Item E"]
                   ==
                 ==
+
+                ;div
+                  ;h2: Advanced Pattern #13 - Complex List Rendering
+                  ::  Force recompile for updated examples
+                  ;+  (render-complex-list-patterns:examples "Hierarchical Data and Conditional Tables")
+                ==
+
+                ;div
+                  ;h2: Advanced Pattern #14 - Form Generation Pattern
+                  ::  Force recompile for updated examples again
+                  ;+  (render-form-generation-pattern:examples "Complex Forms with Validation Display")
+                ==
             ==
-          24
+          27
         ==
       ==
     ==

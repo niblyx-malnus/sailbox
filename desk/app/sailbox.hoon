@@ -1,5 +1,6 @@
 /-  *sailbox
-/+  rudder, dbug, verb, default-agent, sigil, sailbox-webui-index
+/+  rudder, dbug, verb, default-agent,
+    sigil, sailbox-webui-index, examples, sail-lab
 /~  pages  (page:rudder data command)  /lib/sailbox/webui
 |%
 :: $data: ships=(list ship)

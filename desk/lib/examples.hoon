@@ -262,6 +262,8 @@
           "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"#fbbf24\" stroke=\"#f59e0b\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26\"></polygon></svg>"
         %heart
           "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"#ef4444\" stroke=\"#dc2626\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"></path></svg>"
+        %question
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8b5cf6\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\"></path><path d=\"M12 17h.01\"></path></svg>"
         *
           "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#6b7280\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"3\"></circle><path d=\"M12 1v6m0 6v6\"></path><path d=\"m5.64 7.64 4.24 4.24m4.24 0 4.24-4.24\"></path><path d=\"m7.64 16.36 4.24-4.24m4.24 4.24 4.24 4.24\"></path></svg>"
       ==
@@ -561,28 +563,28 @@
       ^-  manx
       =/  theme-classes=tape
         ?-  theme
-          %primary    "bg-blue-500 text-white hover:bg-blue-600"
-          %secondary  "bg-gray-500 text-white hover:bg-gray-600"
-          %success    "bg-green-500 text-white hover:bg-green-600"
-          %danger     "bg-red-500 text-white hover:bg-red-600"
-          *           "bg-gray-300 text-gray-800"
+          %primary    "b-4 f0"
+          %secondary  "b2 f0"
+          %success    "b-3 f0"
+          %danger     "b-1 f0"
+          *           "b1 f1"
         ==
       =/  size-classes=tape
         ?-  size
-          %sm   "px-2 py-1 text-sm"
-          %md   "px-4 py-2 text-base"
-          %lg   "px-6 py-3 text-lg"
-          *     "px-3 py-1.5 text-sm"
+          %sm   "p-1 s-1"
+          %md   "p-2 s0"
+          %lg   "p-3 s1"
+          *     "p-2 s0"
         ==
       =/  variant-classes=tape
         ?-  variant
-          %solid     ""
-          %outline   "border-2 bg-transparent"
-          %ghost     "bg-transparent"
-          *          ""
+          %solid     "bd0 br2 bold"
+          %outline   "bd2 br2"
+          %ghost     "bd0 br1 hover"
+          *          "bd1 br2"
         ==
       =/  all-classes=tape
-        "btn {theme-classes} {size-classes} {variant-classes} rounded transition-colors cursor-pointer"
+        "{theme-classes} {size-classes} {variant-classes} pointer"
       ;button
         =class  all-classes
         =onclick  action
@@ -594,38 +596,38 @@
       ^-  manx
       =/  theme-classes=tape
         ?-  theme
-          %primary    "border-blue-200 bg-blue-50"
-          %secondary  "border-gray-200 bg-gray-50 hover:bg-gray-100"
-          %success    "border-green-200 bg-green-50"
-          %danger     "border-red-200 bg-red-50"
-          *           "border-gray-200 bg-white"
+          %primary    "b-4 f0"
+          %secondary  "b1 f1 hover"
+          %success    "b-3 f0"
+          %danger     "b-1 f0"
+          *           "b0 f0"
         ==
       =/  size-classes=tape
         ?-  size
-          %sm   "p-3"
-          %md   "p-4"
-          %lg   "p-6"
-          *     "p-4"
+          %sm   "p3"
+          %md   "p4"
+          %lg   "p6"
+          *     "p4"
         ==
       =/  variant-classes=tape
         ?-  variant
-          %solid     "shadow-md"
-          %outline   "border-2"
-          %ghost     "border border-dashed"
-          *          "border shadow-sm"
+          %solid     "bd1 br3"
+          %outline   "bd2 br3"
+          %ghost     "bd1 br2"
+          *          "bd1 br2"
         ==
       =/  all-classes=tape
-        "card {theme-classes} {size-classes} {variant-classes} rounded-lg"
+        "{theme-classes} {size-classes} {variant-classes}"
       ;div
         =class  all-classes
-        ;div.card-header
-          =class  "border-b pb-2 mb-3"
+        ;div
+          =class  "bd1 mb2 pb2"
           ;h3
-            =class  "text-lg font-semibold m-0"
+            =class  "s1 bold m0"
             : {title}
           ==
         ==
-        ;div.card-body
+        ;div
           ;+  content
         ==
       ==
@@ -635,28 +637,28 @@
       ^-  manx
       =/  theme-classes=tape
         ?-  theme
-          %primary    "bg-blue-100 text-blue-800"
-          %secondary  "bg-gray-100 text-gray-800"
-          %success    "bg-green-100 text-green-800"
-          %danger     "bg-red-100 text-red-800"
-          *           "bg-gray-100 text-gray-600"
+          %primary    "b-4 f0"
+          %secondary  "b1 f1"
+          %success    "b-3 f0"
+          %danger     "b-1 f0"
+          *           "b1 f2"
         ==
       =/  size-classes=tape
         ?-  size
-          %sm   "px-1.5 py-0.5 text-xs"
-          %md   "px-2.5 py-0.5 text-sm"
-          %lg   "px-3 py-1 text-base"
-          *     "px-2 py-0.5 text-xs"
+          %sm   "p-1 s-2"
+          %md   "p-2 s-1"
+          %lg   "p1 s0"
+          *     "p-1 s-2"
         ==
       =/  variant-classes=tape
         ?-  variant
-          %solid     ""
-          %outline   "border bg-transparent"
-          %ghost     "bg-transparent"
-          *          ""
+          %solid     "bd0 br3 bold"
+          %outline   "bd1 br3"
+          %ghost     "bd0 br2"
+          *          "bd0 br3"
         ==
       =/  all-classes=tape
-        "badge {theme-classes} {size-classes} {variant-classes} rounded-full font-medium inline-block"
+        "{theme-classes} {size-classes} {variant-classes} inline"
       ;span
         =class  all-classes
         : {text}
@@ -776,5 +778,261 @@
     ^-  tape
     =/  base-col=@ud  ?~(cols 1 i.cols)
     "fc basis-full g2"
+  --
+::
+::  Pattern #13: Complex List Rendering
+::
+++  render-complex-list-patterns
+  |=  [title=tape]
+  ^-  manx
+  |^  ;div.complex-list-demo
+        ;h3: {title}
+        ;+  render-explanation
+        ;+  render-tree-demo
+        ;+  render-table-demo
+      ==
+  ++  render-explanation
+    ^-  manx
+    ;p(style "background: #f0fdf4; padding: 10px; border-left: 4px solid #16a34a; margin: 10px 0;")
+      : Complex List Rendering pattern handles nested data structures and tables.
+      : Generate hierarchical trees and tables with conditional cell styling.
+    ==
+  ::
+  ++  render-tree-demo
+    ^-  manx
+    ;div(style "margin: 15px 0;")
+      ;h4: Hierarchical Tree Structure
+      ;+  %-  render-tree
+          :~  [%docs "Documentation" ~[[%guides "User Guides" ~] [%api "API Reference" ~]]]
+              [%src "Source Code" ~[[%frontend "Frontend" ~] [%backend "Backend" ~]]]
+              [%tests "Test Suite" ~]
+          ==
+    ==
+  ::
+  ++  render-table-demo
+    ^-  manx
+    ;div(style "margin: 15px 0;")
+      ;h4: Table with Conditional Cell Classes
+      ;+  %-  render-table
+          :-  ~["Name" "Status" "Score" "Grade"]
+          :~  :~  ["Alice" ""]
+                  ["Active" "bold f-3 status-active"]
+                  ["95" "bold f-4 high-score"]
+                  ["A" "bold f-1 grade-a"]
+              ==
+              :~  ["Bob" ""]
+                  ["Inactive" "f4 status-inactive"]
+                  ["78" ""]
+                  ["B" "f2 grade-b"]
+              ==
+              :~  ["Charlie" ""]
+                  ["Active" "bold f-3 status-active"]
+                  ["88" "bold score"]
+                  ["A-" "bold f-2 grade-a-minus"]
+              ==
+          ==
+    ==
+  ::
+  ++  render-tree
+    |=  items=(list [key=@tas label=tape children=(list [key=@tas label=tape ~])])
+    ^-  manx
+    ;ul.tree-list(style "list-style: none; padding-left: 0; margin: 10px 0;")
+      ;*  %+  turn  items
+          |=  [key=@tas label=tape children=(list [key=@tas label=tape ~])]
+          ;li.tree-item(style "margin: 5px 0; border-left: 2px solid #e5e7eb; padding-left: 10px;")
+            ;div.tree-header(style "font-weight: bold; color: #374151; margin-bottom: 5px;"): {label}
+            ;*  ?~  children
+                ~
+                :~  ;ul.tree-children(style "list-style: none; padding-left: 15px; margin: 5px 0;")
+                      ;*  %+  turn  children
+                          |=  [child-key=@tas child-label=tape ~]
+                          ;li.tree-child(style "margin: 2px 0; color: #6b7280; font-size: 0.9em;"): {child-label}
+                    ==
+                ==
+          ==
+    ==
+  ::
+  ++  render-table
+    |=  [headers=(list tape) rows=(list (list [value=tape classes=tape]))]
+    ^-  manx
+    ;table.data-table(style "border-collapse: collapse; width: 100%; margin: 10px 0; border: 1px solid #d1d5db;")
+      ;thead
+        ;tr(style "background: #f9fafb;")
+          ;*  %+  turn  headers
+              |=  h=tape
+              ;th(style "border: 1px solid #d1d5db; padding: 8px; text-align: left; font-weight: bold;"): {h}
+        ==
+      ==
+      ;tbody
+        ;*  %+  turn  rows
+            |=  row=(list [value=tape classes=tape])
+            ;tr
+              ;*  %+  turn  row
+                  |=  [value=tape classes=tape]
+                  ?:  =(classes "")
+                    ;td(style "border: 1px solid #d1d5db; padding: 8px;"): {value}
+                  ;td(class classes, style "border: 1px solid #d1d5db; padding: 8px;"): {value}
+            ==
+      ==
+    ==
+  --
+::  Pattern #14: Form Generation Pattern
+::  Generate complex forms with validation display
+::
+++  render-form-generation-pattern
+  |=  [title=tape]
+  ^-  manx
+  |^  ;div.form-generation-demo
+        ;h3: {title}
+        ;+  render-explanation
+        ;+  render-contact-form
+        ;+  render-file-upload-form
+      ==
+  ++  render-explanation
+    ^-  manx
+    ;div.explanation(style "background: #f3f4f6; padding: 15px; margin: 10px 0; border-radius: 5px;")
+      ;p: This pattern demonstrates complex form generation with validation display
+      ;ul
+        ;li: Field components with error states
+        ;li: Required field indicators
+        ;li: File upload forms with enctype handling
+        ;li: Dynamic validation styling
+      ==
+    ==
+  ++  render-contact-form
+    ^-  manx
+    ;div
+      ;h4: Valid Contact Form
+      ;form.contact-form(style "max-width: 400px; margin: 20px 0;")
+        ;+  %:  render-field
+                "name"
+                %text
+                "John Doe"
+                "Full Name"
+                ~
+                %.y
+            ==
+        ;+  %:  render-field
+                "email"
+                %email
+                "user@example.com"
+                "Email Address"
+                ~
+                %.y
+            ==
+        ;+  %:  render-field
+                "phone"
+                %tel
+                "555-1234"
+                "Phone Number"
+                ~
+                %.n
+            ==
+        ;+  %:  render-field
+                "message"
+                %textarea
+                "Hello world"
+                "Message"
+                ~
+                %.y
+            ==
+        ;div.form-actions(style "margin-top: 20px;")
+          ;button.submit-btn(type "submit", style "background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;"): Submit
+        ==
+      ==
+      ;h4: Form with Validation Errors (Demo)
+      ;form.contact-form-errors(style "max-width: 400px; margin: 20px 0;")
+        ;+  %:  render-field
+                "name2"
+                %text
+                ""
+                "Full Name"
+                ~["This field is required"]
+                %.y
+            ==
+        ;+  %:  render-field
+                "email2"
+                %email
+                "not-an-email"
+                "Email Address"
+                ~["Please enter a valid email address"]
+                %.y
+            ==
+        ;+  %:  render-field
+                "phone2"
+                %tel
+                "123"
+                "Phone Number"
+                ~["Phone number must be at least 10 digits"]
+                %.n
+            ==
+        ;div.form-actions(style "margin-top: 20px;")
+          ;button.submit-btn(type "submit", disabled "disabled", style "background: #9ca3af; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: not-allowed;"): Submit
+        ==
+      ==
+    ==
+  ++  render-file-upload-form
+    ^-  manx
+    ;div
+      ;h4: File Upload Form
+      ;+  (file-upload-form "/upload" "image/*,application/pdf")
+    ==
+  ++  render-field
+    |=  $:  name=tape
+            type=@t
+            value=tape
+            label=tape
+            errors=(list tape)
+            required=?
+        ==
+    ^-  manx
+    ;div.field-group(style "margin-bottom: 15px;")
+      ;label(for name, style "display: block; margin-bottom: 5px; font-weight: bold; color: #374151;")
+        ;span: {label}
+        ;+  ?:(required ;span.required(style "color: #ef4444;"):"*" ;/(""))
+      ==
+      ;+  ?:  =(type %textarea)
+            ;textarea
+              =name     name
+              =id       name
+              =class    ?~(errors "input" "input input-error")
+              =style    ?~(errors "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;" "width: 100%; padding: 8px; border: 1px solid #ef4444; border-radius: 4px;")
+              ; {value}
+            ==
+          ;input
+            =type     (trip type)
+            =name     name
+            =id       name
+            =value    value
+            =class    ?~(errors "input" "input input-error")
+            =style    ?~(errors "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;" "width: 100%; padding: 8px; border: 1px solid #ef4444; border-radius: 4px;");
+      ;div.field-errors
+        ;*  %+  turn  errors
+            |=  error=tape
+            ;div.error-message(style "color: #ef4444; font-size: 0.875em; margin-top: 5px;"): {error}
+      ==
+    ==
+  ++  file-upload-form
+    |=  [action=tape accept=tape]
+    ^-  manx
+    ;form
+      =method     "post"
+      =action     action
+      =enctype    "multipart/form-data"
+      =style      "max-width: 400px; margin: 20px 0; padding: 20px; border: 1px solid #d1d5db; border-radius: 8px;"
+      ;div.form-group(style "margin-bottom: 15px;")
+        ;label.file-label(style "display: block; margin-bottom: 5px; font-weight: bold; color: #374151;")
+          ;span: Choose file(s):
+          ;input.file-input
+            =type     "file"
+            =name     "files"
+            =accept   accept
+            =style    "width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;";
+        ==
+      ==
+      ;div.form-actions
+        ;button.submit-btn(type "submit", style "background: #10b981; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;"): Upload
+      ==
+    ==
   --
 --

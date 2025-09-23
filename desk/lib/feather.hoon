@@ -1,3 +1,5 @@
+:: borrowed from ~migrev-dolseg's %hawk
+::
 |%
 ++  feather
   ;style
@@ -610,6 +612,13 @@
     ; .grabber        { cursor: grab; }
     ; .no-select      { user-select: none;
     ;                   -webkit-user-select: none; }
+    ; .animate-spin {
+    ;   animation: spin 1s linear infinite;
+    ; }
+    ; @keyframes spin {
+    ;   from { transform: rotate(0deg); }
+    ;   to { transform: rotate(360deg); }
+    ; }
     ; .page {
     ;   padding: var(--p-page);
     ;   margin: auto;
