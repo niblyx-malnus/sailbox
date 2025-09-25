@@ -62,6 +62,7 @@
     ~&  >>  last-event-id+(get-header:http 'last-event-id' header-list.request.req)
     ~&  >  "received {(trip method.request.req)} request for {<site.lin>}!"
     ?:  (is-sse-request:sailbox req)
+      ~&  >>>  %is-sse
       !! :: +do-sse
     ?+    method.request.req
       :_  this
@@ -192,6 +193,8 @@
       ;title:"%sailbox"
       ;meta(charset "utf-8");
       ;meta(name "viewport", content "width=device-width, initial-scale=1");
+      ;script(src "https://unpkg.com/htmx.org@2.0.3");
+      ;script(src "https://unpkg.com/htmx-ext-sse@2.2.2/sse.js");
       ;+  feather:feather
       ;style:"{(trip style)}"
       ;style
@@ -244,6 +247,9 @@
       ==
     ==
     ;body
+      =hx-ext  "sse"
+      =sse-connect  "/sailbox"
+      =sse-close  "close"
       ;+  %-  scrollable-container:lab
           %+  stack:lab
             20
