@@ -1645,15 +1645,67 @@
   ;div
     ;h3: {title}
     ;div
-      ;h4: November 2024 Calendar Grid
-      ;div.b1.bd1.br2.p3
+      ;h4: September 2025 Calendar
+      ;div(style "border: 1px solid #ddd; border-radius: 8px; padding: 12px; background: #f9fafb;")
         ;+  calendar-header
-        ;+  (calendar-week (gulf 1 7))
-        ;+  (calendar-week (gulf 8 14))
+        ;+  render-september-2025
       ==
     ==
   ==
 ::
+::
+++  days-in-month
+  |=  [y=@ud m=@ud]
+  ^-  @ud
+  ?:  ?|  =(m 1)  =(m 3)  =(m 5)  =(m 7)  =(m 8)  =(m 10)  =(m 12)  ==
+    31
+  ?:  ?|  =(m 4)  =(m 6)  =(m 9)  =(m 11)  ==
+    30
+  ?:  =(m 2)
+    ?:  ?|  =(0 (mod y 400))  &(=(0 (mod y 4)) !=(0 (mod y 100)))  ==
+      29
+    28
+  30  :: fallback
+::
+++  september-week-1
+  ^-  manx
+  ;div.fr
+    :: Empty Sunday cell
+    ;div.bd1.p3.fc
+      =style  "min-height: 80px; width: 14.28%; flex: 0 0 14.28%; background: #f5f5f5;"
+      ;span;
+    ==
+    :: Monday to Saturday (1-6)
+    ;*  %+  turn  (gulf 1 6)
+        |=  day=@ud
+        (calendar-cell day)
+  ==
+::
+++  september-week-5
+  ^-  manx
+  ;div.fr
+    :: 28, 29, 30 then empty cells
+    ;*  %+  turn  (gulf 28 30)
+        |=  day=@ud
+        (calendar-cell day)
+    :: Fill rest with empty
+    ;*  %+  reap  4
+        ;div.bd1.p3.fc
+          =style  "min-height: 80px; width: 14.28%; flex: 0 0 14.28%; background: #f5f5f5;"
+          ;span;
+        ==
+  ==
+::
+++  render-september-2025
+  ^-  manx
+  ;div
+    :: Week 1: Empty Sunday, then Mon-Sat (1-6)
+    ;+  september-week-1
+    ;+  (calendar-week (gulf 7 13))
+    ;+  (calendar-week (gulf 14 20))
+    ;+  (calendar-week (gulf 21 27))
+    ;+  september-week-5
+  ==
 ::
 ++  calendar-header
   ^-  manx

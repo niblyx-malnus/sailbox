@@ -5,11 +5,10 @@
   :: manage root level attributes
   ::
   ++  at
-    ::
     |%
     :: Get attribute if it exists as a unit
+    ::
     ++  get
-      ::
       |=  n=mane
       ^-  (unit tape)
       ?~  a.g.a
@@ -18,23 +17,23 @@
         [~ v.i.a.g.a]
       $(a.g.a t.a.g.a)
     :: Get existing or crash
+    ::
     ++  got
-      ::
       |=  n=mane
       (need (get n))
     :: Get with default
+    ::
     ++  gut
-      ::
       |=  [n=mane v=tape]
       (fall (get n) v)
     :: Check for attribute existence
+    ::
     ++  has
-      ::
       |=  n=mane
       !=(~ (get n))
     :: Delete an attribute
+    ::
     ++  del
-      ::
       |=  n=mane
       ^-  manx
       %=    a
@@ -47,8 +46,8 @@
         [i.a.g.a $(a.g.a t.a.g.a)]
       ==
     :: Purge / delete many
+    ::
     ++  pur
-      ::
       |=  n=(set mane)
       ^-  manx
       %=    a
@@ -61,8 +60,8 @@
         [i.a.g.a $(a.g.a t.a.g.a)]
       ==
     :: Keep only from set
+    ::
     ++  kep
-      ::
       |=  n=(set mane)
       ^-  manx
       %=    a
@@ -75,8 +74,8 @@
         [i.a.g.a $(a.g.a t.a.g.a)]
       ==
     :: Add a key-value pair (replaces first instance or appends)
+    ::
     ++  put
-      ::
       |=  [n=mane v=tape]
       ^-  manx
       %=    a
@@ -89,8 +88,8 @@
         [i.a.g.a $(a.g.a t.a.g.a)]
       ==
     :: Add many key-value pairs
+    ::
     ++  gas
-      ::
       |=  b=mart
       ^-  manx
       =/  m  (~(gas by *(map mane tape)) b)
@@ -105,40 +104,43 @@
         [[n.i.a.g.a u.get] t.a.g.a]
       ==
     :: Add or delete value at key
+    ::
     ++  mar
-      ::
-      |=  [n=mane v=(unit tape)]
+      |=  [n=mane v=(unit tape)] 
       ^-  manx
       ?~  v
         (del n)
       (put n u.v)
     :: Modify value at key
+    ::
     ++  jab
-      ::
       |=  [n=mane f=$-(tape tape)]
       ^-  manx
       (put n (f (fall (get n) ~)))
     :: Prepend attribute value
+    ::
     ++  pen
-      ::
       |=  [n=mane v=tape]
       ^-  manx
       (jab n |=(t=tape (weld v t)))
     :: Extend attribute value
+    ::
     ++  ext
-      ::
       |=  [n=mane v=tape]
       ^-  manx
       (jab n |=(t=tape (weld t v)))
     :: Length of attribute list
+    ::
     ++  wyt  (lent a.g.a)
     :: List of values
+    ::
     ++  val  (turn a.g.a tail)
     :: List of keys
+    ::
     ++  key  (turn a.g.a head)
     :: Transform each value
+    ::
     ++  run
-      ::
       |=  f=$-(tape tape)
       ^-  manx
       %=    a
@@ -148,8 +150,8 @@
         [n (f v)]
       ==
     :: Transform value or remove
+    ::
     ++  ron
-      ::
       |=  f=$-(tape (unit tape))
       ^-  manx
       %=    a
@@ -159,8 +161,8 @@
         (bind (f v) (lead n))
       ==
     :: Run considering key
+    ::
     ++  urn
-      ::
       |=  f=$-([mane tape] tape)
       ^-  manx
       %=    a
@@ -170,8 +172,8 @@
         [n (f n v)]
       ==
     :: Run considering key or remove
+    ::
     ++  orn
-      ::
       |=  f=$-([mane tape] (unit tape))
       ^-  manx
       %=    a
@@ -181,62 +183,64 @@
         (bind (f n v) (lead n))
       ==
     :: TrANsform each key-value pair
+    ::
     ++  tan
-      ::
       |=  f=$-([mane tape] [mane tape])
       ^-  manx
       a(a.g (turn a.g.a f))
     :: Transform or remove
+    ::
     ++  ton
-      ::
       |=  f=$-([mane tape] (unit [mane tape]))
       ^-  manx
       a(a.g (murn a.g.a f))
     :: Replace directly
+    ::
     ++  new
-      ::
       |=  b=mart
       ^-  manx
       a(a.g b)
     :: Transform / ChANge entirely
+    ::
     ++  can
-      ::
       |=  f=$-(mart mart)
       ^-  manx
       a(a.g (f a.g.a))
+    ::
     ++  all
-      ::
       |=  f=$-(tape ?)
       (levy (turn a.g.a tail) f)
+    ::
     ++  lal
-      ::
       |=  f=$-([mane tape] ?)
       (levy a.g.a f)
+    ::
     ++  any
-      ::
       |=  f=$-(tape ?)
       (lien (turn a.g.a tail) f)
+    ::
     ++  yan
-      ::
       |=  f=$-([mane tape] ?)
       (lien a.g.a f)
+    ::
     ++  gid  (get %id)
     ++  gac  (get %class)
     ++  ges  (get %style)
     ++  gen  (get %name)
     ++  gev  (get %value)
     :: Put id
+    ::
     ++  pid  |=(i=tape (put:at %id i))
     :: Put class(es)
+    ::
     ++  pac
-      ::
       |=  t=tape
       =/  c  (classes:parsers (gut:at %class "")) :: current
       =/  n  (classes:parsers t)                  :: new
       (put:at %class (inline:classes:parsers (weld c n)))
     :: Delete class(es)
+    ::
     ++  dac
-      ::
       |=  t=tape
       =/  c  (classes:parsers (gut:at %class "")) :: current
       =/  n  (sy (classes:parsers t))             :: to delete
@@ -249,14 +253,14 @@
         [i.c $(c t.c)]
       (put:at %class (inline:classes:parsers c))
     :: Put style
+    ::
     ++  pus
-      ::
       |=  t=tape
       =/  s  (styles:parsers (gut:at %style "")) :: current
       =/  n  (styles:parsers t)                  :: new
       (put:at %style (inline:styles:parsers (~(uni by s) n)))
+    ::
     ++  dus
-      ::
       |=  t=tape
       =/  s  (styles:parsers (gut:at %style "")) :: current
       =/  n  (property-names:styles:parsers t)   :: to delete
@@ -267,9 +271,17 @@
         $(n t.n, s (~(del by s) i.n))
       (put:at %style (inline:styles:parsers s))
     :: Put name
+    ::
     ++  pun  |=(n=tape (put:at %name n))
     :: Put value
+    ::
     ++  puv  |=(v=tape (put:at %value v))
+    :: Add or remove boolean attribute "required"
+    ::
+    ++  req  |=(r=? (mar:at %required ((flit _r) "")))
+    :: Add or remove boolean attribute "selected"
+    ::
+    ++  sec  |=(r=? (mar:at %selected ((flit _r) "")))
     --
   :: An address is a list of knots which can be parsed to a @ud.
   :: This allows us to manually enter paths with e.g. /3/6/5/0.
@@ -277,17 +289,15 @@
   :: Get the manx at index (slav %ud n) of a marl if it exists.
   ::
   ++  wag
-    ::
     |=  [n=@ta c=marl]
     ^-  (unit [i=@ud m=manx])
     =/  i=@ud  (slav %ud n)
     ?~  w=(swag [i 1] c)
       ~
     [~ i i.w]
-  ::  +get: get manx at tree address
-  ::
+  :: Get manx at tree address
+  :: 
   ++  get
-    ::
     |=  p=path
     ^-  (unit manx)
     ?~  p
@@ -295,28 +305,24 @@
     ?~  w=(wag i.p c.a)
       ~
     $(p t.p, a m.u.w)
-  ::  +got: get existing or crash
+  :: Get existing or crash
   ::
   ++  got
-    ::
     |=  p=path
     (need (get p))
   :: Get with default
   ::
   ++  gut
-    ::
     |=  [p=path m=manx]
     (fall (get p) m)
   :: Check for existence
   ::
   ++  has
-    ::
     |=  p=path
     !=(~ (get p))
   :: Get contents
   ::
   ++  gec
-    ::
     |=  p=path
     ^-  (unit marl)
     ?~  m=(get p)
@@ -325,25 +331,21 @@
   :: Get existing contents or crash
   ::
   ++  goc
-    ::
     |=  p=path
     (need (gec p))
   :: Get with default
   ::
   ++  guc
-    ::
     |=  [p=path m=marl]
     (fall (gec p) m)
   :: Check contents existence
   ::
   ++  hac
-    ::
     |=  p=path
     !=(~ (gec p))
   :: Put new manx at address (must be existing)
   ::
   ++  put
-    ::
     |=  [p=path m=manx]
     ^-  manx
     ?~  p
@@ -355,7 +357,6 @@
   :: Put new contents in manx at address
   ::
   ++  puc
-    ::
     |=  [p=path c=marl]
     ^-  manx
     ?~  p
@@ -367,7 +368,6 @@
   :: Delete a manx at an address (must be existing)
   ::
   ++  del
-    ::
     |=  p=path
     ^-  manx
     ?~  p  !!
@@ -380,14 +380,12 @@
   :: Delete contents of manx at an address
   ::
   ++  rem
-    ::
     |=  p=path
     (puc p ~)
   :: Put or delete manx at path
   ::
   ++  mar
-    ::
-    |=  [p=path m=(unit manx)]
+    |=  [p=path m=(unit manx)] 
     ^-  manx
     ?~  m
       (del p)
@@ -395,7 +393,6 @@
   :: Put new manx just before first child (set-after-begin)
   ::
   ++  sab
-    ::
     |=  [p=path m=manx]
     ^-  manx
     ?~  g=(get p)
@@ -404,7 +401,6 @@
   :: Put new manx just after last child (set-before-end)
   ::
   ++  sbe
-    ::
     |=  [p=path m=manx]
     ^-  manx
     ?~  g=(get p)
@@ -413,7 +409,6 @@
   :: Put new manx just before this one in its parent (set-before-begin)
   ::
   ++  sbb
-    ::
     |=  [p=path m=manx]
     ^-  manx
     ?~  p
@@ -426,7 +421,6 @@
   :: Put new manx just after this one in its parent (set-after-end)
   ::
   ++  sae
-    ::
     |=  [p=path m=manx]
     ^-  manx
     ?~  p
@@ -439,7 +433,6 @@
   :: children satisfying some condition
   ::
   ++  kiz
-    ::
     =|  i=@
     |=  =con
     ^-  (list (pair path manx))
@@ -453,7 +446,6 @@
   :: nth child that satisfies some condition
   ::
   ++  kid
-    ::
     =|  i=@
     =/  j=@  1 :: 1-indexed
     |=  [n=@ud =con]
@@ -469,20 +461,16 @@
   :: nth last child that satisfies some condition
   ::
   ++  kib
-    ::
     |=  [n=@ud =con]
     =.  c.a  (flop c.a)
     (kid n con)
   :: transform children satisfying some condition
   ::
   ++  kit
-    ::
     |=  [=con =tan]
     ^-  manx
     %=    a
         c
-              %-  skim  :_
-          |=  =manx  !=(manx ;/(""))
       =|  i=@
       |-
       ?~  c.a
@@ -496,7 +484,6 @@
   :: Previous sibling
   ::
   ++  pes
-    ::
     |=  p=path
     ^-  (unit (pair path manx))
     ?~  p
@@ -511,7 +498,6 @@
   :: Previous sibling
   ::
   ++  nes
-    ::
     |=  p=path
     ^-  (unit (pair path manx))
     ?~  p
@@ -525,9 +511,8 @@
   :: Get a list of (pair path manx) which satisfy some condition
   :: All descendants (including self)
   :: level-order
-  ::
+  :: 
   ++  wic
-    ::
     =|  p=path
     |=  =con
     |^  ^-  (list (pair path manx))
@@ -572,7 +557,6 @@
   :: level-order
   ::
   ++  wif
-    ::
     =|  p=path
     |=  =con
     |^  ^-  (unit (pair path manx))
@@ -612,9 +596,8 @@
   :: Transform descendents which satisfy some condition
   :: All descendants (including self)
   :: pre-order
-  ::
+  :: 
   ++  wit
-    ::
     =|  p=path
     |=  [=con =tan]
     ^-  manx
@@ -635,7 +618,6 @@
   :: All ancestors (including self)
   ::
   ++  wac
-    ::
     |=  $:  p=path :: location in tree
             =con
         ==
@@ -651,7 +633,6 @@
   :: All ancestors (including self)
   ::
   ++  waf
-    ::
     |=  $:  p=path :: location in tree
             =con
         ==
@@ -666,7 +647,6 @@
   :: which satisfy some condition
   ::
   ++  wat
-    ::
     |=  $:  p=path :: location in tree
             =con
             =tan
@@ -681,7 +661,6 @@
   :: Conditions
   ::
   ++  con
-    ::
     =<  con
     |%
     +$  con  $-([path manx] ?)
@@ -697,13 +676,13 @@
     ::
     ++  tag
       |=  n=mane
-      |=  [* m=manx]
+      |=  [* m=manx] 
       =(n n.g.m)
     :: Is id
     ::
     ++  sid
       |=  i=tape
-      |=  [* m=manx]
+      |=  [* m=manx] 
       =/  u=(unit tape)
         (get:~(at mx m) %id)
       &(?=(^ u) =(i u.u))
@@ -711,7 +690,7 @@
     ::
     ++  cas
       |=  c=tape
-      |=  [* m=manx]
+      |=  [* m=manx] 
       %.  c
       %~  has  in
       %-  sy  %-  classes:parsers
@@ -720,24 +699,24 @@
     ::
     ++  tar
       |=  n=mane
-      |=  [* m=manx]
+      |=  [* m=manx] 
       (has:~(at mx m) n)
     :: Is attribute
     ::
     ++  tir
       |=  [n=mane v=tape]
-      |=  [* m=manx]
+      |=  [* m=manx] 
       =([~ v] (get:~(at mx m) n))
     :: Is text node
     ::
     ++  tex
-      |=  [* m=manx]
+      |=  [* m=manx] 
       &(((tag %$) +<) ((tar %$) +<))
     :: Attribute starts with
     ::
     ++  sat
       |=  [n=mane v=tape]
-      |=  [* m=manx]
+      |=  [* m=manx] 
       =/  u=(unit tape)
         (get:~(at mx m) n)
       &(?=(^ u) =(v (scag (lent v) u.u)))
@@ -745,7 +724,7 @@
     ::
     ++  eat
       |=  [n=mane v=tape]
-      |=  [* m=manx]
+      |=  [* m=manx] 
       =/  u=(unit tape)
         (get:~(at mx m) n)
       &(?=(^ u) =((flop v) (scag (lent v) (flop u.u))))
@@ -753,7 +732,7 @@
     ::
     ++  cat
       |=  [n=mane v=tape]
-      |=  [* m=manx]
+      |=  [* m=manx] 
       =/  u=(unit tape)
         (get:~(at mx m) n)
       &(?=(^ u) ?=(^ (find v u.u)))
@@ -764,10 +743,10 @@
   :: Transformations
   ::
   ++  tan
-    ::
     =<  tan
     |%
     +$  tan  $-([path manx] manx)
+    ++  put  |=([n=mane v=tape] |=([* m=manx] (put:~(at mx m) n v)))
     ++  pid  |=(i=tape |=([* m=manx] (pid:~(at mx m) i)))
     ++  pac  |=(c=tape |=([* m=manx] (pac:~(at mx m) c)))
     ++  dac  |=(c=tape |=([* m=manx] (dac:~(at mx m) c)))
@@ -775,7 +754,8 @@
     ++  dus  |=(s=tape |=([* m=manx] (dus:~(at mx m) s)))
     ++  pun  |=(n=tape |=([* m=manx] (pun:~(at mx m) n)))
     ++  puv  |=(v=tape |=([* m=manx] (puv:~(at mx m) v)))
-    ++  emp  |=([* m=manx] ;/(""))
+    ++  req  |=(r=? |=([* m=manx] (req:~(at mx m) r)))
+    ++  sec  |=(s=? |=([* m=manx] (sec:~(at mx m) s)))
     --
   :: Some common getters
   ::
@@ -800,6 +780,9 @@
   :: First descendant with given name attribute
   ::
   ++  gen  |=(v=tape (wif (tir:con %name v)))
+  :: First descendant with given value attribute
+  ::
+  ++  gev  |=(v=tape (wif (tir:con %value v)))
   :: Value attribute of first descendant with given name attribute
   ::
   ++  val  |=(v=tape ?~(m=(gen v) ~ (get:~(at mx q.u.m) %value)))
@@ -883,6 +866,76 @@
   ++  nth-last-child-of-type  |=([n=@ud t=mane] (kib n (tag:con t)))
   --
 ::
+++  kv
+  |%
+  +$  key-value-list  (list [key=@t value=@t])
+  ::
+  ++  get-key
+    |=  [key=@t =key-value-list]
+    ^-  (unit @t)
+    (get-header:http key key-value-list)
+  ::
+  ++  get-all-key
+    |=  [key=@t =key-value-list]
+    ^-  (list @t)
+    =/  val=(unit @t)  (get-key key key-value-list)
+    ?~  val
+      ~
+    :-  u.val
+    $(key-value-list (delete-key key key-value-list))
+  ::
+  ++  set-key
+    |=  [key=@t value=@t =key-value-list]
+    ^+  key-value-list
+    (set-header:http key value key-value-list)
+  ::
+  ++  delete-key
+    |=  [key=@t =key-value-list]
+    ^+  key-value-list
+    (delete-header:http key key-value-list)
+  ::
+  ++  delete-all-key
+    |=  [key=@t =key-value-list]
+    ^+  key-value-list
+    =/  val=(unit @t)  (get-key key key-value-list)
+    ?~  val
+      key-value-list
+    $(key-value-list (delete-key key key-value-list))
+  ::
+  ++  parse-body
+    |=  body=(unit octs)
+    ^-  key-value-list
+    %-  fall  :_  *key-value-list
+    %+  rush
+      `@t`(tail (fall body [0 '']))
+    yquy:de-purl:html
+  :: convert bracket / array-like keys from a form submission
+  :: to a hierarchical map of values (axal)
+  :: e.g. from input with name="thing[a][b][c]"
+  ::
+  +$  brac  (axal (list @t))
+  ++  de-bracket
+    =|  =brac
+    |=  l=key-value-list
+    ^+  brac
+    ?~  l
+      brac
+    =/  p=(unit path)  (brackets:parsers key.i.l) :: insane path
+    ?~  p
+      $(l t.l)
+    ?~  get=(~(get of brac) u.p)
+      $(l t.l, brac (~(put of brac) u.p [value.i.l ~]))
+    $(l t.l, brac (~(put of brac) u.p [value.i.l u.get]))
+  :: get last (or only) element of list contents
+  ::
+  ++  reed
+    |*  a=(unit (list *))
+    (rear (need a))
+  ++  reef
+    |*  [a=(unit (list *)) b=*]
+    (rear (fall a [b ~]))
+  --
+:: 
 ++  parsers
   |%
   ++  classes
@@ -892,10 +945,27 @@
     ++  parse   |=(c=tape `(list tape)`(fall (rust c classes) ~))
     ++  inline  |=(c=(list tape) (zing (join " " c)))
     ++  class
-      (plus ;~(less gah next))
+      =|  class=tape
+      |-
+      ;<  c=(unit char)  bind  near :: peek at next char; don't consume
+      ?~  c :: if we've fully parsed, return the class so far
+        (easy class)
+      ?^  (rush u.c gah) :: if next char is whitespace, finish
+        (easy class)
+      ;<  *  bind  next :: actually consume next char
+      $(class (weld class u.c ~)) :: add character and repeat to check next
     ::
     ++  classes
-      ;~(pfix (star gah) ;~(sfix (more (plus gah) class) (star gah)))
+      =|  classes=(list tape)
+      |-
+      ;<  *           bind  (star gah) :: parse any whitespace
+      ;<  class=tape  bind  class      :: parse a class
+      =?  classes  ?=(^ class)         :: add non-empty class
+        [class classes]
+      ;<  d=?  bind  done :: check if fully parsed and return / continue
+      ?.  d
+        $
+      (easy (flop classes)) 
     --
   ::
   ++  styles
@@ -936,14 +1006,14 @@
       ;<  d=?  bind  done :: check if fully parsed and return / continue
       ?.  d
         $
-      (easy (flop names))
+      (easy (flop names)) 
     :: parse everything between double quotes
     ::
     ++  doqseg
       ;<  c=char  bind  doq :: starts with double quote
-      =/  seg=tape  [c ~]
+      =/  seg=tape  [c ~]  
       |-
-      ;<  n=@t  bind  ;~(pose (jest '\\"') next)
+      ;<  n=@t  bind  ;~(pose (jest '\\\\') (jest '\\"') next)
       =.  seg  (weld seg (trip n))
       ?~  (rush n doq)
         $
@@ -952,9 +1022,9 @@
     ::
     ++  soqseg
       ;<  c=char  bind  soq :: starts with double quote
-      =/  seg=tape  [c ~]
+      =/  seg=tape  [c ~]  
       |-
-      ;<  n=@t  bind  ;~(pose (jest '\\\'') next)
+      ;<  n=@t  bind  ;~(pose (jest '\\\\') (jest '\\\'') next)
       =.  seg  (weld seg (trip n))
       ?~  (rush n soq)
         $
@@ -994,10 +1064,39 @@
     ++  styles  (star name-and-value)
     --
   ::
+  ++  brackets
+    =<  parse
+    =,  monadic
+    |%
+    ++  parse  |=(b=@t `(unit (list @t))`(rush b brackets))
+    :: parse everything between double brackets
+    ::
+    ++  bracket-contents
+      ;<  c=char  bind  sel :: starts with double quote
+      =|  seg=tape
+      |-
+      ;<  n=@t  bind  ;~(pose (jest '\\\\') (jest '\\]') next)
+      ?^  (rush n ser)
+        (easy (crip seg))
+      $(seg (weld seg (trip n)))
+    ::
+    ++  brackets
+      ;<  seg=@t  bind  (cook crip (star (non sel)))
+      ?~  seg
+        fail
+      =/  brackets=(list @t)  [seg ~]
+      |-
+      ;<  d=?  bind  done :: check if fully parsed and return / continue
+      ?:  d
+        (easy (flop brackets)) 
+      ;<  seg=@t  bind  bracket-contents :: parse a bracket segment
+      $(brackets [seg brackets])
+    --
+  ::
   ++  monadic
     |%
     ++  pure  easy
-    ++  bind
+    ++  bind  
       |*  =mold
       |*  [sef=rule gat=$-(mold rule)]
       |=  tub=nail
@@ -1040,7 +1139,7 @@
       ?~  q.q.u.q.vex
         [p=p.vex q=[~ u=[p=%.y q=tub]]]
       [p=p.vex q=[~ u=[p=%.n q=tub]]]
-    :: next if fail to parse on rule
+    :: next if fail to parse on rule 
     :: (assumes single character parse)
     ::
     ++  non
@@ -1049,6 +1148,5 @@
       ?^(c fail next)
     --
   --
+:: TODO: convert back and forth between pith and HTML id
 --
-
-
