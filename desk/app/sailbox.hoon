@@ -149,6 +149,12 @@
   ?+    site  !!
       [%sailbox ~]
     [/text/html (manx-to-octs:server page)]
+      [%sailbox %gradient ~]
+    [/text/html (manx-to-octs:server gradient-page)]
+      [%sailbox %wallet ~]
+    [/text/html (manx-to-octs:server wallet-page)]
+      [%sailbox %ingredients ~]
+    [/text/html (manx-to-octs:server ingredients-page)]
   ==
 ::
 ++  do-post
@@ -449,4 +455,90 @@
           ==
     ==
   ==
+::
+++  gradient-styles
+  '''
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  .gradient-container {
+    height: 200vh;
+    width: 100%;
+    background: linear-gradient(to bottom,
+      #9333ea 0%,    /* purple */
+      #dc2626 33%,   /* red */
+      #ea580c 66%,   /* orange */
+      #eab308 100%   /* yellow */
+    );
+  }
+  .content {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    color: white;
+    font-family: monospace;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  }
+  '''
+::
+++  gradient-page
+  ^-  manx
+  %-  htmx-page:lab
+  :+  "Sailbox Gradient"  &
+  :-  `gradient-styles
+  ;div(class "gradient-container")
+    ;div(class "content")
+      ;h1: Purple Red Orange Yellow Gradient
+      ;p: Scroll down to see the full gradient!
+      ;p: Height: 200vh (twice the viewport)
+    ==
+  ==
+::
+++  wallet-page
+  ^-  manx
+  =/  full-wallets-content=manx
+    ;div.fc.g4
+      ;div.p4.b1.br2
+        ;div.s1.bold.mb2: 💼 Full BIP32 Wallets
+        ;p.f2.s-1: Complete wallets with master keys and derivation paths
+        ;p.f3.s-2: Generate from seed phrases, restore existing wallets, or create new ones
+      ==
+    ==
+  =/  watch-only-content=manx
+    ;div.fc.g4
+      ;div.p4.b1.br2
+        ;div.s1.bold.mb2: 👁️ Watch-Only Accounts
+        ;p.f2.s-1: Monitor addresses without spending capability
+        ;p.f3.s-2: Import xpubs or single addresses to track balances and transactions
+      ==
+    ==
+  =/  signing-accounts-content=manx
+    ;div.fc.g4
+      ;div.p4.b1.br2
+        ;div.s1.bold.mb2: 🔑 Signing Accounts
+        ;p.f2.s-1: Individual keys and hardware wallet connections
+        ;p.f3.s-2: Import private keys or connect hardware wallets for transaction signing
+      ==
+    ==
+  =/  tab-items=(list [id=tape label=tape content=manx])
+    :~  ["full" "💼 Full Wallets" full-wallets-content]
+        ["watch" "👁️ Watch-Only" watch-only-content]
+        ["signing" "🔑 Signing" signing-accounts-content]
+    ==
+  %-  htmx-page:lab
+  :^  "Bitcoin Wallet"  &  ~
+  ;div.fc.g4.p5.ma.mw-page
+    ;div.tc.mb3
+      ;h1.s3.bold: ₿ Bitcoin Wallet
+      ;p.f2.s-1: Manage your Bitcoin wallets and accounts
+    ==
+    ;+  (tabs:lab tab-items "full")
+  ==
+::
+++  ingredients-page
+  ^-  manx
+  *manx
 --

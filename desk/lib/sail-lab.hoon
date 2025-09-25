@@ -1,6 +1,6 @@
 :: sail-lab.hoon - Composable Sail components for web interfaces
 ::
-/+  sigil
+/+  feather, sigil
 |%
 :: Basic card component for content containers
 ++  card
@@ -227,4 +227,88 @@
     =style  "top: 0; left: 0;"
     ;+  content
   ==
+:: Generic tabs component for clean tabbed interfaces
+::
+++  tabs
+  |=  [items=(list [id=tape label=tape content=manx]) selected=tape]
+  ^-  manx
+  =/  tab-script=tape
+    """
+    $(function() \{
+      $('.tab-button').click(function() \{
+        var tabName = $(this).data('tab');
+        $('.tab-content').hide();
+        $('#content-' + tabName).fadeIn();
+        $('.tab-button').css(\{
+          'background': 'var(--b1)',
+          'color': 'var(--f2)',
+          'border-bottom': '3px solid transparent'
+        });
+        $(this).css(\{
+          'background': 'var(--b0)',
+          'color': 'var(--f0)',
+          'border-bottom': '3px solid var(--f-3)'
+        });
+      });
+    });
+    """
+  ;div.b0.br2(style "box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden;")
+    :: Tab buttons
+    ;div.fr.b1
+      ;*  %+  turn  items
+          |=  [id=tape label=tape content=manx]
+          =/  is-selected=?  =(id selected)
+          =/  button-style=tape
+            ?:  is-selected
+              "border: none; background: var(--b0); color: var(--f0); border-bottom: 3px solid var(--f-3);"
+            "border: none; background: var(--b1); color: var(--f2); border-bottom: 3px solid transparent;"
+          ;button.tab-button.p4.grow.hover.pointer(data-tab id, style button-style)
+            ; {label}
+          ==
+    ==
+    :: Tab content area
+    ;div.p5.b0(style "min-height: 400px;")
+      ;*  %+  turn  items
+          |=  [id=tape label=tape content=manx]
+          =/  is-selected=?  =(id selected)
+          =/  display-style=tape
+            ?:  is-selected  "display: block;"  "display: none;"
+          ;div(id "content-{id}", class "tab-content", style display-style)
+            ;+  content
+          ==
+    ==
+    ;script: {tab-script}
+  ==
+:: Standard HTMX page wrapper with common head elements
+::
+++  htmx-page
+  |=  [title=tape scrollable=? styles=(unit @t) body=manx]
+  ^-  manx
+  ;html
+    ;head
+      ;title: {title}
+      ;meta(charset "utf-8");
+      ;meta(name "viewport", content "width=device-width, initial-scale=1");
+      ;script(src "https://unpkg.com/htmx.org@2.0.3");
+      ;script(src "https://unpkg.com/htmx-ext-sse@2.2.2/sse.js");
+      ;script(src "https://code.jquery.com/jquery-3.7.1.min.js");
+      ;script(src "https://code.jquery.com/jquery-3.6.0.min.js");
+      ;+  feather:feather
+      ;*  ?~(styles ~ ~[;style:"{(trip u.styles)}"])
+      ;*  ?.  scrollable
+            ~
+          :_  ~
+          ;style
+            ; /* Enable scrolling for HTMX pages */
+            ; html, body {
+            ;   overflow: auto !important;
+            ;   height: auto !important;
+            ;   min-height: 100vh !important;
+            ; }
+              ==
+              ;body
+                ;+  body
+              ==
+            ==
+          ==
 --
