@@ -1,12 +1,11 @@
 /-  *sailbox
-/+  dbug, verb, default-agent, server, multipart, sailbox,
-    html-utils, sigil, examples, lab=sail-lab, feather
+/+  dbug, default-agent, server, sailbox,
+    html-utils, examples, lab=sail-lab, feather
 ::
 |%
 :: $data: ships=(list ship)
 +$  state-0  [%0 data]
-+$  eyre-id  @ta
-+$  card  card:agent:gall
++$  card  card:sailbox
 ++  kv  kv:html-utils
 --
 ::
@@ -16,19 +15,15 @@
 =<
 ::
 %-  agent:dbug
-%+  verb  |
-^-  agent:gall
+%-  agent:sailbox
+^-  sailbox:sailbox
 |_  =bowl:gall
 +*  this  .
     def   ~(. (default-agent this %|) bowl)
     hc    ~(. +> bowl)
 ::
-++  on-init
-  ^-  (quip card _this)
-  :_  this
-  [%pass /eyre/connect %arvo %e %connect [~ /[dap.bowl]] dap.bowl]~
-::
-++  on-save  !>(state)
+++  on-init   [~ this]
+++  on-save   !>(state)
 ::
 ++  on-load
   |=  ole=vase
@@ -53,125 +48,60 @@
       ~&  "Adding ship..."
       `this(ships [ship.command ships])
     ==
-    ::
-      %handle-http-request
-    =+  !<([eyre-id=@ta req=inbound-request:eyre] vase)
-    =/  lin=request-line:server  (parse-request-line:server url.request.req)
-    ~&  >>  accept+(get-header:http 'accept' header-list.request.req)
-    ~&  >>  connection+(get-header:http 'connection' header-list.request.req)
-    ~&  >>  last-event-id+(get-header:http 'last-event-id' header-list.request.req)
-    ~&  >  "received {(trip method.request.req)} request for {<site.lin>}!"
-    ?:  (is-sse-request:sailbox req)
-      ~&  >>>  %is-sse
-      !! :: +do-sse
-    ?+    method.request.req
-      :_  this
-      %+  give-simple-payload:app:server
-        eyre-id
-      (method-not-allowed:sailbox method.request.req)
-      ::
-        %'GET'
-      :_  this
-      (give-mime-response:sailbox eyre-id (do-get:hc lin))
-      ::
-        %'POST'
-      =/  parts=(unit (list [@t part:multipart]))
-        (de-request:multipart [header-list body]:request.req)
-      ?^  parts
-        =/  paz=(map @t part:multipart)
-          (~(gas by *(map @t part:multipart)) u.parts)
-        =/  get=(unit part:multipart)  (~(get by paz) 'get')
-        =.  u.parts  ~(tap by (~(del by paz) 'get'))
-        =^  cards  state
-          abet:(do-upload:hc site.lin u.parts)
-        :_  this
-        %+  welp  cards
-        ?^  get
-          %+  give-mime-response:sailbox  eyre-id
-          (do-get:hc (parse-request-line:server body.u.get))
-        %+  give-simple-payload:app:server
-          eyre-id
-        two-oh-four:sailbox
-      =/  args=key-value-list:kv  (parse-body:kv body.request.req)
-      =/  get=(unit @t)  (get-key:kv 'get' args)
-      =^  cards  state
-        abet:(do-post:hc site.lin (delete-key:kv 'get' args))
-      :_  this
-      %+  welp  cards
-      ?^  get
-        %+  give-mime-response:sailbox  eyre-id
-        (do-get:hc (parse-request-line:server u.get))
-      %+  give-simple-payload:app:server
-        eyre-id
-      two-oh-four:sailbox
-    ==
   ==
 ::
-++  on-watch
-  |=  =path
-  ^-  (quip card _this)
-  ?>  =(our.bowl src.bowl)
-  ?+  path  (on-watch:def path)
-    [%http-response *]  [~ this]
-  ==
-::
-++  on-agent  on-agent:def
-++  on-peek   on-peek:def
-::
-++  on-arvo
-  |=  [=wire =sign-arvo]
-  ^-  (quip card _this)
-  ?+  sign-arvo  (on-arvo:def wire sign-arvo)
-      [%eyre %bound *]
-    ~?  !accepted.sign-arvo
-      [dap.bowl 'eyre bind rejected!' binding.sign-arvo]
-    [~ this]
-  ==
-::
+++  on-watch  on-watch:def
 ++  on-leave  on-leave:def
+++  on-peek   on-peek:def
+++  on-agent  on-agent:def
+++  on-arvo   on-arvo:def
 ++  on-fail   on-fail:def
---
-::
-=|  cards=(list card)
-|_  =bowl:gall
-+*  this  .
-++  emit  |=(=card this(cards [card cards]))
-++  emil  |=(cadz=(list card) this(cards (welp (flop cadz) cards)))
-++  abet  [(flop cards) state]
 ::
 ++  do-get
-  |=  request-line:server
-  :: +$  request-line
-  ::   $:  [ext=(unit @ta) site=(list @t)]
-  ::       args=(list [key=@t value=@t])
-  ::   ==
+  |=  [[ext=(unit @ta) site=(list @t)] args=(list [key=@t value=@t])]
   ^-  mime
-  ?+    site  !!
+  ?+    site  [/text/html (as-octs:mimes:html '<h1>404 Not Found</h1>')]
       [%sailbox ~]
-    [/text/html (manx-to-octs:server page)]
+    [/text/html (manx-to-octs:server page:hc)]
       [%sailbox %gradient ~]
-    [/text/html (manx-to-octs:server gradient-page)]
+    [/text/html (manx-to-octs:server gradient-page:hc)]
       [%sailbox %wallet ~]
-    [/text/html (manx-to-octs:server wallet-page)]
+    [/text/html (manx-to-octs:server wallet-page:hc)]
       [%sailbox %ingredients ~]
-    [/text/html (manx-to-octs:server ingredients-page)]
+    [/text/html (manx-to-octs:server ingredients-page:hc)]
   ==
 ::
 ++  do-post
-  |=  [site=path args=key-value-list:kv]
-  ^+  this
-  ?+    site  !!
+  |=  [site=path args=(list [key=@t value=@t])]
+  ^-  (quip card _this)
+  ?+    site  `this
       [%sailbox ~]
-    =/  action=@t  (need (get-key:kv 'action' args))
-    ?>  =(%add-ship action)
-    =/  =ship  (slav %p (need (get-key:kv 'ship' args)))
-    this(ships [ship ships])
+    =/  action=(unit @t)  (get-key:kv 'action' args)
+    ?~  action  `this
+    ?>  =(%add-ship u.action)
+    =/  ship-cord=(unit @t)  (get-key:kv 'ship' args)
+    ?~  ship-cord  `this
+    =/  =ship  (slav %p u.ship-cord)
+    `this(ships [ship ships])
   ==
 ::
 ++  do-upload
-  |=  [site=path parts=(list [@t part:multipart])]
-  ^+  this
-  !!
+  |=  [site=path =parts:sailbox]
+  ^-  (quip card _this)
+  `this
+::
+++  make-sse-event
+  |=  [site=(list @t) args=(list [key=@t value=@t]) id=(unit @t) event=(unit @t)]
+  ^-  wain
+  ~['data: ship list updated']
+::
+++  first-sse-event
+  |=  [site=(list @t) args=(list [key=@t value=@t]) last-event-id=(unit @t)]
+  ^-  (unit sse-key:sailbox)
+  ~
+--
+::
+|_  =bowl:gall
 ::
 ++  style
   '''
