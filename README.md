@@ -298,6 +298,64 @@ two-oh-four
 - No client-side JavaScript required
 - Perfect for progressive enhancement
 
+### SSE Connection Management & HTMX Boost
+
+**Problem:** Browsers limit concurrent connections per domain (typically 6). Multiple SSE connections can cause request delays and navigation lag.
+
+**Solution:** Use a single persistent SSE connection with `hx-boost` for instant navigation:
+
+```hoon
+;body(hx-boost "true", hx-ext "sse", sse-connect "/yourapp/stream")
+  ;+  body
+==
+```
+
+**What this does:**
+
+1. **Single SSE connection** - One `/yourapp/stream` endpoint handles all real-time events
+2. **Persistent across navigation** - `hx-boost="true"` intercepts links/forms, swaps body content without full page reload
+3. **Connection stays open** - SSE connection survives navigation, no reconnecting
+4. **Faster navigation** - AJAX swaps instead of full page loads (incredibly zippy!)
+
+**Event routing:**
+
+Individual elements declare which events they listen for:
+```hoon
+;div(sse-swap "wallet-list-update")      :: listens for wallet-list-update
+;div(sse-swap "restore-error")           :: listens for restore-error
+;div(sse-swap "generate-clear")          :: listens for generate-clear
+```
+
+**Implementation:**
+
+```hoon
+:: In make-sse-event
+++  make-sse-event
+  |=  [site=(list @t) args=... id=(unit @t) event=(unit @t)]
+  ^-  wain
+  ?+    site  !!
+      [%yourapp %stream ~]
+    ?+    event  !!
+      [~ %wallet-list-update]  (manx-to-wain:sailbox updated-list)
+      [~ %restore-error]       (manx-to-wain:sailbox error-message)
+      [~ %generate-clear]      (manx-to-wain:sailbox clear-script)
+    ==
+  ==
+
+:: Emit events with %sse cards
+:_  this
+:~  [%sse /yourapp/stream ~ `'wallet-list-update']
+    [%sse /yourapp/stream ~ `'restore-error']
+==
+```
+
+**Benefits:**
+- Reduces connection usage from N to 1
+- Eliminates navigation delays
+- Instant page transitions
+- Progressive enhancement (falls back to normal navigation if JS disabled)
+- Clean separation of event types
+
 ## Component Library Foundation
 
 Ready-to-use utility libraries:

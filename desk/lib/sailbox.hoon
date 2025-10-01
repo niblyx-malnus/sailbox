@@ -356,8 +356,11 @@
     ^-  (quip card:agent:gall agent:gall)
     =^  cards  app  on-init:og
     :_  this
-    :_  (deal cards make-sse-event:og)
-    [%pass /eyre/connect %arvo %e %connect [~ /[dap.bowl]] dap.bowl]
+    ;:  welp
+      ~[[%pass /eyre/connect %arvo %e %connect [~ /[dap.bowl]] dap.bowl]]
+      ~[[%pass /timer/sse %arvo %b %wait (add now.bowl keep-alive)]]
+      (deal cards make-sse-event:og)
+    ==
   ::
   ++  on-save  on-save:og :: TODO: consider preserving connections state
   :: TODO: consider preserving connections state
@@ -382,6 +385,7 @@
     ~&  >  "received {(trip method.request.req)} request for {<site.lin>}!"
     ::
     ?:  (is-sse-request req)
+      ~&  %sse-request
       =/  last-event-id=(unit @t)
         (get-header:http 'last-event-id' header-list.request.req)
       =/  first=(unit sse-key)
@@ -410,13 +414,16 @@
       (method-not-allowed method.request.req)
       ::
         %'GET'
+      ~&  %get-request
       :_  this
       (give-mime-response eyre-id (do-get:og lin))
       ::
         %'POST'
+      ~&  %post-request
       =/  parts=(unit (list [@t part:multipart]))
         (de-request:multipart [header-list body]:request.req)
       ?^  parts
+        ~&  %upload-request
         =/  paz=(map @t part:multipart)
           (~(gas by *(map @t part:multipart)) u.parts)
         =/  get=(unit part:multipart)  (~(get by paz) 'get')
@@ -432,6 +439,7 @@
         %+  give-simple-payload:app:server
           eyre-id
         two-oh-four
+      ~&  %standard-post-request
       =/  args=key-value-list:kv  (parse-body:kv body.request.req)
       =/  get=(unit @t)  (get-key:kv 'get' args)
       =/  action=(unit @t)  (get-key:kv 'action' args)
